@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>hu.zforgo</groupId>
+	<artifactId>junit-tools</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>JUnit Tools</name>
+	<description>JUnit Extension which makes easier data generation, error handling and many more.</description>
+	<inceptionYear>2015</inceptionYear>
+	<url>https://github.com/zforgo/junit-tools</url>
+
+	<scm>
+		<connection>scm:git:git@github.com:zforgo/junit-tools.git</connection>
+		<developerConnection>scm:git:git@github.com:zforgo/junit-tools.git</developerConnection>
+		<url>${project.url}</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<issueManagement>
+		<system>JIRA</system>
+		<url>http://jira.junittools.virgo.hu/browse/JUT</url>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License, version 3</name>
+			<url>http://opensource.org/licenses/GPL-3.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>zforgo</id>
+			<name>Zoltan Forgo</name>
+			<email>zforgo@gmail.com</email>
+			<timezone>Europe/Budapest</timezone>
+			<roles>
+				<role>lead</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<junit.version>4.12</junit.version>
+		<slf4j.version>1.7.12</slf4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>configurator</module>
+		<module>context</module>
+	</modules>
+</project>
