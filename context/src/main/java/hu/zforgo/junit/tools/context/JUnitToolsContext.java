@@ -16,11 +16,14 @@ public class JUnitToolsContext {
 
 	protected static synchronized void createContext(Description description) {
 		if (instance != null) {
-			LOG.warn("JUnitTools context class ({}) has already created", instance.getClass().getName());
+			LOG.warn("JUnitTools context class ({}) has already created.", instance.getClass().getName());
 			return;
 		}
+		LOG.info("Creating JUnitToolsContext...");
 		JUnitToolsContext currentContext = new JUnitToolsContext();
+
 		currentContext.init(description);
+		LOG.info("JUnitToolsContext was successfully initialized.");
 
 		if (instance == null) {
 			instance = currentContext;
