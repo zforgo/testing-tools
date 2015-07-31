@@ -38,4 +38,12 @@ public interface Configuration {
 
 	String getString(String key, String defaultValue);
 
+	String[] getStringArray(String key);
+
+	String[] getStringArray(String key, char delimiter);
+
+	String[] getStringArray(String key, String[] defaultValue);
+
+	String[] getStringArray(String key, char delimiter, String[] defaultValue);
+
 }

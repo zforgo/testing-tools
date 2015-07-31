@@ -1,5 +1,7 @@
 package hu.zforgo.junit.tools.configuration;
 
+import hu.zforgo.StringUtil;
+
 import java.util.NoSuchElementException;
 
 abstract class AbstractConfiguration implements Configuration {
@@ -57,7 +59,6 @@ abstract class AbstractConfiguration implements Configuration {
 			return defaultValue;
 		}
 	}
-
 
 	@Override
 	public int intValue(String key) {
@@ -124,6 +125,34 @@ abstract class AbstractConfiguration implements Configuration {
 	public String getString(String key, String defaultValue) {
 		try {
 			return getString(key);
+		} catch (NoSuchElementException e) {
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public String[] getStringArray(String key) {
+		return getStringArray(key, StringUtil.DEFAULT_DELIMITER);
+	}
+
+	@Override
+	public String[] getStringArray(String key, char delimiter) {
+		return getString(key).split(String.valueOf(delimiter));
+	}
+
+	@Override
+	public String[] getStringArray(String key, String[] defaultValue) {
+		try {
+			return getStringArray(key);
+		} catch (NoSuchElementException e) {
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public String[] getStringArray(String key, char delimiter, String[] defaultValue) {
+		try {
+			return getStringArray(key, delimiter);
 		} catch (NoSuchElementException e) {
 			return defaultValue;
 		}
