@@ -41,8 +41,10 @@ public class ConfigurationFactory {
 			}
 		}
 		if (c == null) {
-			//TODO message
-			throw new IOException();
+			StringBuilder sb = new StringBuilder();
+			sb.append("Cannot load config file '").append(name).append("' from sources:");
+			paths.forEach(path -> sb.append(path.toString()).append("\n"));
+			throw new IOException(sb.toString());
 		}
 		return c;
 	}
