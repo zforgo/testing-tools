@@ -29,7 +29,7 @@ public class JUnitToolsContext {
 
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		if (cl == null) {
-			cl = JUnitToolsContext_work.class.getClassLoader();
+			cl = JUnitToolsContext.class.getClassLoader();
 			if (cl == null) {
 				cl = ClassLoader.getSystemClassLoader();
 			}

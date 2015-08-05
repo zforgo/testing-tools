@@ -2,6 +2,8 @@ package hu.zforgo.junit.tools.configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Properties;
 
 class PropertiesLoader {
@@ -16,6 +18,13 @@ class PropertiesLoader {
 			p.load(is);
 			return p;
 		}
+	}
+
+	public static Properties load(final String name, final Path path) throws IOException {
+		final Path file = path.resolve(name);
+		Properties p = new Properties();
+		p.load(Files.newBufferedReader(file));
+		return p;
 	}
 
 	private static ClassLoader classLoader() {

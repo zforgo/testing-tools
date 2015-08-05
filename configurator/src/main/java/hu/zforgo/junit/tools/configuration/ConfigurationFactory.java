@@ -2,6 +2,8 @@ package hu.zforgo.junit.tools.configuration;
 
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Properties;
 
 public class ConfigurationFactory {
@@ -25,6 +27,24 @@ public class ConfigurationFactory {
 	public static Configuration load(String name, ClassLoader cl, Configuration parent) throws IOException {
 		Configuration base = load(name, cl);
 		return new HierarchicalConfiguration(base, parent);
+	}
+
+	public static Configuration load(String name, Collection<Path> paths) throws IOException {
+		Configuration c = null;
+		for (Path path : paths) {
+			try {
+				Properties p = PropertiesLoader.load(name, path);
+				if (p != null && !p.isEmpty()) {
+					c = (c == null) ? new SimlpleConfiguration(p) : new HierarchicalConfiguration(p, c);
+				}
+			} catch (IOException ignored) {
+			}
+		}
+		if (c == null) {
+			//TODO message
+			throw new IOException();
+		}
+		return c;
 	}
 
 }
