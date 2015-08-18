@@ -14,6 +14,9 @@ class PropertiesLoader {
 
 	public static Properties load(final ClassLoader cl, final String name) throws IOException {
 		try (InputStream is = cl.getResourceAsStream(name)) {
+			if (is == null) {
+				throw new IOException(String.format("Couldn't find properties file [%s] on classpath", name));
+			}
 			Properties p = new Properties();
 			p.load(is);
 			return p;
