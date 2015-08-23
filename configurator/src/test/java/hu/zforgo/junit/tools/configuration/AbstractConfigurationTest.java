@@ -12,7 +12,7 @@ import static org.assertj.core.api.StrictAssertions.catchThrowable;
 
 public abstract class AbstractConfigurationTest {
 
-	protected static volatile Configuration c;
+	protected Configuration c;
 
 	@Before
 	public void initConfiguration() throws IOException {
