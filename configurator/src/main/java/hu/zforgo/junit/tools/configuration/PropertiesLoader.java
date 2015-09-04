@@ -9,10 +9,10 @@ import java.util.Properties;
 class PropertiesLoader {
 
 	public static Properties load(final String name) throws IOException {
-		return load(classLoader(), name);
+		return load(name, classLoader());
 	}
 
-	public static Properties load(final ClassLoader cl, final String name) throws IOException {
+	public static Properties load(final String name, final ClassLoader cl) throws IOException {
 		try (InputStream is = cl.getResourceAsStream(name)) {
 			if (is == null) {
 				throw new IOException(String.format("Couldn't find properties file [%s] on classpath", name));

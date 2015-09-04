@@ -13,9 +13,13 @@ public class ConfigurationFactory {
 		return new SimlpleConfiguration(p);
 	}
 
-
 	public static Configuration load(String name, ClassLoader cl) throws IOException {
-		Properties p = PropertiesLoader.load(cl, name);
+		Properties p = PropertiesLoader.load(name, cl);
+		return new SimlpleConfiguration(p);
+	}
+
+	public static Configuration load(String name, Path path) throws IOException {
+		Properties p = PropertiesLoader.load(name, path);
 		return new SimlpleConfiguration(p);
 	}
 

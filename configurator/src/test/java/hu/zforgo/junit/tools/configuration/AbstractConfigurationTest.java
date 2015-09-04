@@ -1,30 +1,30 @@
 package hu.zforgo.junit.tools.configuration;
 
 import org.assertj.core.api.ThrowableAssert;
-import org.junit.Before;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
-import static org.assertj.core.api.StrictAssertions.catchThrowable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
+
+@RunWith(Parameterized.class)
 public abstract class AbstractConfigurationTest {
 
-	protected Configuration c;
+	@Rule
+	public LoggerRule rule;
 
-	@Before
-	public void initConfiguration() throws IOException {
-		if (c == null) {
-			Configuration tmp = loadConfiguration();
-			if (c == null) {
-				c = tmp;
-			}
-		}
+	public Configuration c;
+
+
+	public AbstractConfigurationTest(String type, Configuration c) {
+		this.c = c;
+		rule = new LoggerRule(type);
 	}
-
-	protected abstract Configuration loadConfiguration() throws IOException;
 
 	protected void checkMissingKey(final ThrowableAssert.ThrowingCallable e) {
 		Throwable t = catchThrowable(e);

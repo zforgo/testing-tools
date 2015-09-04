@@ -1,14 +1,10 @@
 package hu.zforgo.junit.tools.configuration;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
 
 public class SimplePrimitiveTest extends SimpleConfigurationTest {
-
-	private static final Logger LOG = LoggerFactory.getLogger(SimplePrimitiveTest.class);
 
 	private static final byte byteValue = 42;
 	private static final byte byteValueNegative = -37;
@@ -32,11 +28,12 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 	private static final double doubleValue = 54340282346638528860000000000000000000000.000000;
 	private static final double doubleValueNegative = -5340282346638528860000000000000000000000.000000;
 
+	public SimplePrimitiveTest(String type, Configuration c) {
+		super(type, c);
+	}
+
 	@Test
 	public void booleanTests() {
-		LOG.info("Starting boolean checks...");
-
-		//Checks for boolean
 		assertThat(c.boolValue("basic.boolean")).isTrue();
 		assertThat(c.boolValue("numeric.boolean")).isTrue();
 		assertThat(c.boolValue("numeric.boolean.number")).isFalse();
@@ -49,9 +46,6 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 	@Test
 	public void byteTests() {
-		LOG.info("Starting byte checks...");
-
-		//Checks for byte
 		assertThat(c.byteValue("byte.value")).isEqualTo(byteValue);
 		assertThat(c.byteValue("byte.value.negative")).isEqualTo(byteValueNegative);
 		checkMissingKey(() -> c.byteValue("missing.byte"));
@@ -66,9 +60,6 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 	@Test
 	public void shortTests() {
-		LOG.info("Starting short checks...");
-
-		//Checks for short
 		assertThat(c.shortValue("byte.value")).isEqualTo(byteValue);
 		assertThat(c.shortValue("byte.value.negative")).isEqualTo(byteValueNegative);
 		assertThat(c.shortValue("short.value")).isEqualTo(shortValue);
@@ -83,9 +74,6 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 	@Test
 	public void intTests() {
-		LOG.info("Starting int checks...");
-
-		//Checks for int
 		assertThat(c.intValue("byte.value")).isEqualTo(byteValue);
 		assertThat(c.intValue("byte.value.negative")).isEqualTo(byteValueNegative);
 		assertThat(c.intValue("short.value")).isEqualTo(shortValue);
@@ -110,8 +98,6 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 	@Test
 	public void longTest() {
-		LOG.info("Starting long checks...");
-
 		assertThat(c.longValue("byte.value")).isEqualTo(byteValue);
 		assertThat(c.longValue("byte.value.negative")).isEqualTo(byteValueNegative);
 		assertThat(c.longValue("short.value")).isEqualTo(shortValue);
@@ -139,8 +125,6 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 	@Test
 	public void floatTest() {
-		LOG.info("Starting float checks...");
-
 		assertThat(c.floatValue("byte.value")).isEqualTo(byteValue);
 		assertThat(c.floatValue("byte.value.negative")).isEqualTo(byteValueNegative);
 		assertThat(c.floatValue("short.value")).isEqualTo(shortValue);
@@ -169,8 +153,6 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 	@Test
 	public void doubleTest() {
-		LOG.info("Starting double checks...");
-
 		assertThat(c.doubleValue("byte.value")).isEqualTo(byteValue);
 		assertThat(c.doubleValue("byte.value.negative")).isEqualTo(byteValueNegative);
 		assertThat(c.doubleValue("short.value")).isEqualTo(shortValue);

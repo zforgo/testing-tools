@@ -2,14 +2,10 @@ package hu.zforgo.junit.tools.configuration;
 
 import hu.zforgo.StringUtil;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimpleObjectTest extends SimpleConfigurationTest {
-
-	private static final Logger LOG = LoggerFactory.getLogger(SimpleObjectTest.class);
 
 	private static final String stringValue = "Lorem ipsum color dem";
 	private static final String stringValueDefault = "FooBar and Bad Robot";
@@ -30,11 +26,13 @@ public class SimpleObjectTest extends SimpleConfigurationTest {
 			"Ge péta kaŭzé kvádriliónó san, öré kö infinitivo ánstataŭigi"
 	};
 
+	public SimpleObjectTest(String type, Configuration c) {
+		super(type, c);
+	}
+
 
 	@Test
 	public void stringTest() {
-		LOG.info("Starting String checks...");
-
 		assertThat(c.getString("string.value")).isEqualTo(stringValue);
 		assertThat(c.getString("string.value", stringValueDefault)).isEqualTo(stringValue);
 		checkMissingKey(() -> c.getString("missing.string"));
@@ -48,7 +46,6 @@ public class SimpleObjectTest extends SimpleConfigurationTest {
 
 	@Test
 	public void stringArrayTest() {
-		LOG.info("Starting String array checks...");
 		assertThat(c.getStringArray("string.array")).isEqualTo(stringArray);
 		assertThat(c.getStringArray("string.array", StringUtil.EMPTY_STRING_ARRAY)).isEqualTo(stringArray);
 		checkMissingKey(() -> c.getString("missing.string.array"));
@@ -62,6 +59,5 @@ public class SimpleObjectTest extends SimpleConfigurationTest {
 		assertThat(c.getStringArray("string.array.double.colon", ':')).isEqualTo(stringArrayDouble);
 		assertThat(c.getStringArray("string.array.colon.escaped", ':')).isEqualTo(stringArray);
 		assertThat(c.getStringArray("string.array.colon.multiline", ':')).isEqualTo(stringArrayMultiline);
-
 	}
 }
