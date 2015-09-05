@@ -15,7 +15,7 @@
 
 	<scm>
 		<connection>scm:git:git@github.com:zforgo/junit-tools.git</connection>
-		<developerConnection>scm:git:git@github.com:zforgo/junit-tools.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/zforgo/junit-tools.git</developerConnection>
 		<url>${project.url}</url>
 		<tag>HEAD</tag>
 	</scm>
@@ -59,7 +59,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<junit.version>4.12</junit.version>
 		<slf4j.version>1.7.12</slf4j.version>
-		<github.global.server>github</github.global.server>
+		<project.scm.id>github</project.scm.id>
+		<github.global.server>${project.scm.id}</github.global.server>
 	</properties>
 
 	<build>
@@ -70,6 +71,7 @@
 				<configuration>
 					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo
 					</altDeploymentRepository>
+					<updateReleaseInfo>true</updateReleaseInfo>
 				</configuration>
 			</plugin>
 
@@ -78,24 +80,15 @@
 				<artifactId>site-maven-plugin</artifactId>
 				<version>0.12</version>
 				<configuration>
-					<!-- git commit message -->
 					<message>Maven artifacts for ${project.version}</message>
-					<!-- disable webpage processing -->
 					<noJekyll>true</noJekyll>
-					<!-- matches distribution management repository url above -->
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-					<!-- remote branch name -->
 					<branch>refs/heads/maven-repository</branch>
-					<!-- If you remove this then the old artifact will be removed and new
-					   one will replace. But with the merge tag you can just release by changing
-														the version -->
 					<merge>true</merge>
 					<includes>
 						<include>**/*</include>
 					</includes>
-					<!-- github repo name -->
 					<repositoryName>junit-tools</repositoryName>
-					<!-- github username -->
 					<repositoryOwner>zforgo</repositoryOwner>
 				</configuration>
 				<executions>
@@ -106,6 +99,11 @@
 						<phase>deploy</phase>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.2</version>
 			</plugin>
 		</plugins>
 	</build>
