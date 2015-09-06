@@ -2,6 +2,8 @@ package hu.zforgo.junit.tools.configuration;
 
 public interface Configuration {
 
+	boolean isEmpty();
+
 	Object get(String key);
 
 	Object get(String key, Object defaultValue);

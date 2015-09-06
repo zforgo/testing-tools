@@ -1,5 +1,7 @@
 package hu.zforgo.junit.tools.configuration;
 
+import hu.zforgo.CollectionUtil;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -19,6 +21,10 @@ public class SimlpleConfiguration extends AbstractConfiguration {
 	public SimlpleConfiguration(Map<String, Object> props) {
 		Objects.requireNonNull(props, "props must not be null");
 		this.props = props;
+	}
+
+	public boolean isEmpty() {
+		return CollectionUtil.isEmpty(props);
 	}
 
 	@Override

@@ -32,6 +32,10 @@ public class HierarchicalConfiguration extends AbstractConfiguration {
 		this.parent = parent;
 	}
 
+	public boolean isEmpty() {
+		return current.isEmpty() && (parent == null || parent.isEmpty());
+	}
+
 	@Override
 	public Object get(String key) {
 		Object result = current.get(key, null);
