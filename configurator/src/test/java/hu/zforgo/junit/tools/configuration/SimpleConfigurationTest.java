@@ -33,8 +33,9 @@ public abstract class SimpleConfigurationTest extends AbstractConfigurationTest 
 	@Parameterized.Parameters
 	public static Collection<Object[]> loadConfiguration() throws IOException, URISyntaxException {
 		return Arrays.asList(new Object[][]{
-				{"classLoader", ConfigurationFactory.load("configuration/levels/first/" + PROPERTIES_NAME)},
-				{"path", ConfigurationFactory.load("test.properties", path())}
+				{"builtIn_classLoader", ConfigurationFactory.load("configuration/levels/first/" + PROPERTIES_NAME)},
+				{"path", ConfigurationFactory.load("test.properties", path())},
+				{"custom_classLoader", ConfigurationFactory.load("configuration/levels/first/" + PROPERTIES_NAME, SimpleConfigurationTest.class.getClassLoader())}
 		});
 	}
 
