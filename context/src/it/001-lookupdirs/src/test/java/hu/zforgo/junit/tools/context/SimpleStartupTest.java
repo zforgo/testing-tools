@@ -25,7 +25,7 @@ public class SimpleStartupTest {
 
 		Configuration c = JUnitToolsContext.getInstance().getConfig("test.properties");
 		assertThat(c.getString("relative.path")).isEqualTo("foo/bar/baz");
-		assertThat(c.getString("middle.only")).isEqualTo("herwego");
+		assertThat(c.getString("middle.only")).isEqualTo("herewego");
 		assertThat(c.getString("wrapped")).isEqualTo("third");
 	}
 }
