@@ -1,5 +1,6 @@
 package hu.zforgo.junit.tools.context;
 
+import hu.zforgo.CollectionUtil;
 import hu.zforgo.StringUtil;
 import hu.zforgo.junit.tools.configuration.Configuration;
 import hu.zforgo.junit.tools.configuration.ConfigurationFactory;
@@ -8,12 +9,16 @@ import org.junit.runner.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 import java.util.ServiceLoader;
-import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class JUnitToolsContext {
@@ -23,7 +28,11 @@ public class JUnitToolsContext {
 	private static volatile JUnitToolsContext instance;
 	private static volatile ClassLoader contextClassLoader;
 	private static volatile Configuration contextConfig;
-	private static volatile Set<Path> configLookupFolders;
+	private static volatile List<Path> configLookupFolders;
+
+	private static volatile transient HashMap<String, Configuration> configCache = new HashMap<>();
+	private final transient ReentrantLock lock = new ReentrantLock();
+
 
 	private JUnitToolsContext() {
 	}
@@ -49,16 +58,19 @@ public class JUnitToolsContext {
 
 		try {
 			{
-				Configuration tmp = ConfigurationFactory.load(StringUtil.isEmpty(System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE)) ? Defaults.CONFIG_FILENAME : System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE));
-				//TODO check tmp must not be empty
+				final String configFilename = StringUtil.isEmpty(System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE)) ? Defaults.CONFIG_FILENAME : System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE);
+				Configuration tmp = ConfigurationFactory.load(configFilename);
 				if (contextConfig == null) {
+					if (tmp.isEmpty()) {
+						throw new ContextInitializationFailure(String.format("Context configuration shouldn't be empty [%s]", configFilename));
+					}
 					contextConfig = tmp;
 				}
 			}
 			{
-				Set<Path> tmp = prepareConfigPaths();
+				List<Path> tmp = prepareConfigPaths();
 				if (configLookupFolders == null) {
-					configLookupFolders = tmp;
+					configLookupFolders = Collections.unmodifiableList(tmp);
 				}
 			}
 			currentContext.init(description);
@@ -75,13 +87,10 @@ public class JUnitToolsContext {
 		}
 	}
 
-	private static Set<Path> prepareConfigPaths() {
-		final Path configRoot = Paths.get(contextConfig.getString(Defaults.LOOKUP_ROOT, contextConfig.getString(Defaults.BASEDIR, contextConfig.getString(Defaults.USER_DIR))));
+	private static List<Path> prepareConfigPaths() {
+		final Path configRoot = Paths.get(System.getProperty(Defaults.LOOKUP_ROOT, System.getProperty(Defaults.BASEDIR, System.getProperty(Defaults.USER_DIR))));
 		Iterator<ConfigurationPathProvider> providerIterator = ServiceLoader.load(ConfigurationPathProvider.class).iterator();
-		if (providerIterator.hasNext()) {
-			return providerIterator.next().getPaths(configRoot, contextConfig);
-		}
-		return Collections.singleton(configRoot);
+		return providerIterator.hasNext() ? providerIterator.next().getPaths(configRoot, contextConfig) : Collections.singletonList(configRoot);
 	}
 
 	public static JUnitToolsContext getInstance() {
@@ -90,6 +99,54 @@ public class JUnitToolsContext {
 
 	protected void init(Description description) throws ContextInitializationException {
 		inited = true;
+	}
+
+	public Configuration getConfig(String name, Configuration defaultConfig) {
+		Configuration c = getConfig(name);
+		if (c == null) {
+			if (defaultConfig == null) {
+				throw new IllegalArgumentException("Default config cannot be null if given config wasn't found");
+			}
+			return defaultConfig;
+		}
+		return c;
+	}
+
+	public Configuration getConfig(String name) {
+		if (StringUtil.isWhite(name)) {
+			throw new IllegalArgumentException("Config name cannot be null");
+		}
+		Configuration c = configCache.get(name);
+		if (c != null) {
+			return c;
+		}
+		try {
+			c = CollectionUtil.isEmpty(configLookupFolders) ? ConfigurationFactory.load(name, contextClassLoader) : ConfigurationFactory.load(name, configLookupFolders);
+			if (c != null) {
+				cacheConfig(name, c);
+			}
+			return c;
+		} catch (IOException e) {
+			throw new InvalidConfigurationException("Failed to load configuration: " + name, e);
+		}
+	}
+
+	private void cacheConfig(String name, Configuration config) {
+		if (StringUtil.isWhite(name) || Objects.isNull(config)) {
+			return;
+		}
+
+		final ReentrantLock lock = this.lock;
+		lock.lock();
+		try {
+			int size = configCache.size();
+			HashMap<String, Configuration> newCache = new HashMap<>((size * 4 / 3) + 1);
+			newCache.putAll(configCache);
+			newCache.put(name, config);
+			configCache = newCache;
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	protected synchronized void finalize(Result result) {

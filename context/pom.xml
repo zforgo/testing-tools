@@ -3,11 +3,11 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>hu.zforgo</groupId>
-		<artifactId>junit-tools</artifactId>
+		<groupId>hu.zforgo.testing</groupId>
+		<artifactId>junit-tools-parent</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>context</artifactId>
+	<artifactId>junit-tools-context</artifactId>
 
 	<name>JUnit Tools Context</name>
 
@@ -20,9 +20,32 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>configurator</artifactId>
+			<artifactId>junit-tools-configurator</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-invoker-plugin</artifactId>
+				<version>2.0.0</version>
+				<configuration>
+					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+					<settingsFile>src/it/settings.xml</settingsFile>
+					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+					<!--<postBuildHookScript>verify</postBuildHookScript> &lt;!&ndash; no extension required &ndash;&gt;-->
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>install</goal>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
 

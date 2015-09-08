@@ -3,11 +3,11 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>hu.zforgo</groupId>
-		<artifactId>junit-tools</artifactId>
+		<groupId>hu.zforgo.testing</groupId>
+		<artifactId>junit-tools-parent</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>configurator</artifactId>
+	<artifactId>junit-tools-configurator</artifactId>
 
 	<name>Properties and Configuration</name>
 

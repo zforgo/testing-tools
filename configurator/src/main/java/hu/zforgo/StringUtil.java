@@ -15,4 +15,8 @@ public class StringUtil {
 	public static boolean isNotEmpty(String input) {
 		return input != null && input.length() > 0;
 	}
+
+	public static boolean isWhite(String input) {
+		return isEmpty(input) || input.trim().length() == 0;
+	}
 }

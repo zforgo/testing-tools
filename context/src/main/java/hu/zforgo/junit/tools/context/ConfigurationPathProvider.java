@@ -3,9 +3,9 @@ package hu.zforgo.junit.tools.context;
 import hu.zforgo.junit.tools.configuration.Configuration;
 
 import java.nio.file.Path;
-import java.util.Set;
+import java.util.List;
 
 public interface ConfigurationPathProvider {
 
-	Set<Path> getPaths(final Path root, final Configuration props);
+	List<Path> getPaths(final Path root, final Configuration props);
 }
