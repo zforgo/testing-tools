@@ -25,12 +25,12 @@ public class ConfigurationFactory {
 
 	public static Configuration load(String name, Configuration parent) throws IOException {
 		Configuration base = load(name);
-		return new HierarchicalConfiguration(base, parent);
+		return (parent == null) ? base : new HierarchicalConfiguration(base, parent);
 	}
 
 	public static Configuration load(String name, ClassLoader cl, Configuration parent) throws IOException {
 		Configuration base = load(name, cl);
-		return new HierarchicalConfiguration(base, parent);
+		return (parent == null) ? base : new HierarchicalConfiguration(base, parent);
 	}
 
 	public static Configuration load(String name, Collection<Path> paths) throws IOException {
