@@ -24,8 +24,17 @@ public class ConfigurationFactory {
 	}
 
 	public static Configuration load(String name, Configuration parent) throws IOException {
-		Configuration base = load(name);
+		Configuration base;
+		try {
+			base = load(name);
+		} catch (IOException e) {
+			if (parent == null) {
+				throw e;
+			}
+			return parent;
+		}
 		return (parent == null) ? base : new HierarchicalConfiguration(base, parent);
+
 	}
 
 	public static Configuration load(String name, ClassLoader cl, Configuration parent) throws IOException {

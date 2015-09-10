@@ -18,7 +18,6 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 public abstract class SimpleConfigurationTest extends AbstractConfigurationTest {
 
 	private static final String PROPERTIES_NAME = "test.properties";
-	private static final String MISSING_PROPERTIES_NAME = "missing.properties";
 
 	public SimpleConfigurationTest(String type, Configuration c) {
 		super(type, c);

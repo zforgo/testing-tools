@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//TODO missing keys w/ default values => should be equal with the default
 public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 
 	private static final byte byteValue = 42;
@@ -35,7 +34,10 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.boolValue("boolean.wrap")).isTrue();
 		assertThat(c.boolValue("boolean.firstwrong")).isTrue();
 		assertThat(c.boolValue("boolean.allset")).isTrue();
-		checkMissingKey(() -> c.byteValue("missing.boolean"));
+		checkMissingKey(() -> c.boolValue("missing.boolean"));
+		assertThat(c.boolValue("missing.boolean", true)).isTrue();
+		assertThat(c.boolValue("boolean.allset", false)).isTrue();
+		assertThat(c.boolValue("boolean.wrap", false)).isTrue();
 	}
 
 	@Test
@@ -46,6 +48,9 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.byteValue("byte.firstwrong")).isEqualTo(byteValue);
 		assertThat(c.byteValue("byte.allset")).isEqualTo(byteValue);
 		checkMissingKey(() -> c.byteValue("missing.byte"));
+		assertThat(c.byteValue("missing.byte", byteValue)).isEqualTo(byteValue);
+		assertThat(c.byteValue("byte.allset", byteValueNegative)).isEqualTo(byteValue);
+		assertThat(c.byteValue("byte.wrap", byteValueNegative)).isEqualTo(byteValue);
 	}
 
 	@Test
@@ -56,6 +61,9 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.shortValue("short.firstwrong")).isEqualTo(shortValue);
 		assertThat(c.shortValue("short.allset")).isEqualTo(shortValue);
 		checkMissingKey(() -> c.shortValue("missing.short"));
+		assertThat(c.shortValue("missing.short", shortValue)).isEqualTo(shortValue);
+		assertThat(c.shortValue("short.allset", shortValueNegative)).isEqualTo(shortValue);
+		assertThat(c.shortValue("short.wrap", shortValueNegative)).isEqualTo(shortValue);
 	}
 
 	@Test
@@ -66,6 +74,9 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.intValue("int.firstwrong")).isEqualTo(intValue);
 		assertThat(c.intValue("int.allset")).isEqualTo(intValue);
 		checkMissingKey(() -> c.intValue("missing.int"));
+		assertThat(c.intValue("missing.int", intValue)).isEqualTo(intValue);
+		assertThat(c.intValue("int.allset", intValueNegative)).isEqualTo(intValue);
+		assertThat(c.intValue("int.wrap", intValueNegative)).isEqualTo(intValue);
 	}
 
 	@Test
@@ -76,6 +87,9 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.longValue("long.firstwrong")).isEqualTo(longValue);
 		assertThat(c.longValue("long.allset")).isEqualTo(longValue);
 		checkMissingKey(() -> c.longValue("missing.long"));
+		assertThat(c.longValue("missing.long", longValue)).isEqualTo(longValue);
+		assertThat(c.longValue("long.allset", longValueNegative)).isEqualTo(longValue);
+		assertThat(c.longValue("long.wrap", longValueNegative)).isEqualTo(longValue);
 	}
 
 	@Test
@@ -86,6 +100,9 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.floatValue("float.firstwrong")).isEqualTo(floatValue);
 		assertThat(c.floatValue("float.allset")).isEqualTo(floatValue);
 		checkMissingKey(() -> c.floatValue("missing.float"));
+		assertThat(c.floatValue("missing.float", floatValue)).isEqualTo(floatValue);
+		assertThat(c.floatValue("float.allset", floatValueNegative)).isEqualTo(floatValue);
+		assertThat(c.floatValue("float.wrap", floatValueNegative)).isEqualTo(floatValue);
 	}
 
 	@Test
@@ -96,5 +113,8 @@ public class HierarchicalPrimitiveTest extends HierarchicalConfigurationTest {
 		assertThat(c.doubleValue("double.firstwrong")).isEqualTo(doubleValue);
 		assertThat(c.doubleValue("double.allset")).isEqualTo(doubleValue);
 		checkMissingKey(() -> c.doubleValue("missing.double"));
+		assertThat(c.doubleValue("missing.double", doubleValue)).isEqualTo(doubleValue);
+		assertThat(c.doubleValue("double.allset", doubleValueNegative)).isEqualTo(doubleValue);
+		assertThat(c.doubleValue("double.wrap", doubleValueNegative)).isEqualTo(doubleValue);
 	}
 }

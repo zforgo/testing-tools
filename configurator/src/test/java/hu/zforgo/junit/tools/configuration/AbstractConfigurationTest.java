@@ -15,6 +15,8 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 @RunWith(Parameterized.class)
 public abstract class AbstractConfigurationTest {
 
+	protected static final String MISSING_PROPERTIES_NAME = "missing.properties";
+
 	@Rule
 	public LoggerRule rule;
 
