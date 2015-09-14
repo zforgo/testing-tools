@@ -102,14 +102,14 @@ public class JUnitToolsContext {
 	}
 
 	public Configuration getConfig(String name, Configuration defaultConfig) {
-		Configuration c = getConfig(name);
-		if (c == null) {
+		try {
+			return getConfig(name);
+		} catch (InvalidConfigurationException e) {
 			if (defaultConfig == null) {
 				throw new IllegalArgumentException("Default config cannot be null if given config wasn't found");
 			}
 			return defaultConfig;
 		}
-		return c;
 	}
 
 	public Configuration getConfig(String name) {

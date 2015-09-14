@@ -1,6 +1,20 @@
 package hu.zforgo.junit.tools.configuration;
 
+import java.util.NoSuchElementException;
+
 public interface Configuration {
+
+	Configuration EMPTY = new AbstractConfiguration() {
+		@Override
+		public Object get(String key) {
+			throw new NoSuchElementException("Configuration key not found: " + key);
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return true;
+		}
+	};
 
 	boolean isEmpty();
 
