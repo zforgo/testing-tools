@@ -21,14 +21,14 @@ public class HierarchicalConfiguration extends AbstractConfiguration {
 	public HierarchicalConfiguration(Properties current, Configuration parent) {
 		Objects.requireNonNull(parent, "parent must not be null");
 
-		this.current = new SimlpleConfiguration(current);
+		this.current = new SimpleConfiguration(current);
 		this.parent = parent;
 	}
 
 	public HierarchicalConfiguration(Map<String, Object> current, Configuration parent) {
 		Objects.requireNonNull(parent, "parent must not be null");
 
-		this.current = new SimlpleConfiguration(current);
+		this.current = new SimpleConfiguration(current);
 		this.parent = parent;
 	}
 

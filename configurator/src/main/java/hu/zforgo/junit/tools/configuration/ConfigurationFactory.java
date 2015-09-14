@@ -10,17 +10,17 @@ public class ConfigurationFactory {
 
 	public static Configuration load(String name) throws IOException {
 		Properties p = PropertiesLoader.load(name);
-		return new SimlpleConfiguration(p);
+		return new SimpleConfiguration(p);
 	}
 
 	public static Configuration load(String name, ClassLoader cl) throws IOException {
 		Properties p = PropertiesLoader.load(name, cl);
-		return new SimlpleConfiguration(p);
+		return new SimpleConfiguration(p);
 	}
 
 	public static Configuration load(String name, Path path) throws IOException {
 		Properties p = PropertiesLoader.load(name, path);
-		return new SimlpleConfiguration(p);
+		return new SimpleConfiguration(p);
 	}
 
 	public static Configuration load(String name, Configuration parent) throws IOException {
@@ -48,7 +48,7 @@ public class ConfigurationFactory {
 			try {
 				Properties p = PropertiesLoader.load(name, path);
 				if (p != null && !p.isEmpty()) {
-					c = (c == null) ? new SimlpleConfiguration(p) : new HierarchicalConfiguration(p, c);
+					c = (c == null) ? new SimpleConfiguration(p) : new HierarchicalConfiguration(p, c);
 				}
 			} catch (IOException ignored) {
 			}
