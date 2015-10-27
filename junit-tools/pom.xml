@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>hu.zforgo.testing</groupId>
+		<artifactId>testing-tools</artifactId>
+		<version>0.2.0-SNAPSHOT</version>
+	</parent>
+	<groupId>hu.zforgo.testing.junit</groupId>
+	<artifactId>junit-tools</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Testing Tools for JUnit</name>
+
+	<properties>
+		<slf4j.version>1.7.12</slf4j.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>3.1.0</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>context</module>
+	</modules>
+</project>

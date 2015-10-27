@@ -57,8 +57,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+
 		<project.scm.id>github</project.scm.id>
 		<github.global.server>${project.scm.id}</github.global.server>
+
+		<junit.version>4.12</junit.version>
 	</properties>
 
 	<build>
@@ -108,6 +111,12 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
 				<version>3.1.0</version>
@@ -117,7 +126,7 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>configurator</module>
+		<module>commons</module>
 		<module>junit-tools</module>
 	</modules>
 </project>

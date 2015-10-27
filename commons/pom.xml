@@ -14,5 +14,6 @@
 
 	<modules>
 		<module>configuration</module>
+		<module>utils</module>
 	</modules>
 </project>
