@@ -1,4 +1,4 @@
-package hu.zforgo.junit.tools.context;
+package hu.zforgo.testing.context;
 
 //TODO find a better name
 public class InvalidConfigurationException extends RuntimeException {

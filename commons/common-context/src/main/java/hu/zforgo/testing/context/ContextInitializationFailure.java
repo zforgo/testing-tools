@@ -1,4 +1,4 @@
-package hu.zforgo.junit.tools.context;
+package hu.zforgo.testing.context;
 
 public class ContextInitializationFailure extends Error {
 	private static final long serialVersionUID = 1L;
