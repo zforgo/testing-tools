@@ -12,16 +12,16 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>hu.zforgo.testing</groupId>
+			<artifactId>common-context</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>${project.groupId}</groupId>-->
-			<!--<artifactId>junit-tools-configurator</artifactId>-->
-			<!--<version>${project.version}</version>-->
-		<!--</dependency>-->
 	</dependencies>
 	<build>
 		<plugins>

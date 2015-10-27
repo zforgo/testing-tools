@@ -8,6 +8,13 @@
 	</parent>
 	<artifactId>common-context</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>configuration</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>
 

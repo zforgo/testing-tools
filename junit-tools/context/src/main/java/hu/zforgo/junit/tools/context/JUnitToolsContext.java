@@ -1,9 +1,15 @@
 package hu.zforgo.junit.tools.context;
 
-import hu.zforgo.CollectionUtil;
-import hu.zforgo.StringUtil;
-import hu.zforgo.junit.tools.configuration.Configuration;
-import hu.zforgo.junit.tools.configuration.ConfigurationFactory;
+import hu.zforgo.common.util.CollectionUtil;
+import hu.zforgo.common.util.StringUtil;
+import hu.zforgo.testing.context.ConfigurationPathProvider;
+import hu.zforgo.testing.context.ContextInitializationException;
+import hu.zforgo.testing.context.ContextInitializationFailure;
+import hu.zforgo.testing.context.Defaults;
+import hu.zforgo.testing.context.InvalidConfigurationException;
+import hu.zforgo.testing.tools.configuration.Configuration;
+
+import hu.zforgo.testing.tools.configuration.ConfigurationFactory;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.slf4j.Logger;

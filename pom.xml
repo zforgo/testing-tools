@@ -62,6 +62,7 @@
 		<github.global.server>${project.scm.id}</github.global.server>
 
 		<junit.version>4.12</junit.version>
+		<slf4j.version>1.7.12</slf4j.version>
 	</properties>
 
 	<build>
@@ -111,6 +112,16 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>configuration</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
@@ -124,6 +135,14 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+	</dependencies>
 
 	<modules>
 		<module>commons</module>

@@ -1,6 +1,6 @@
 package hu.zforgo.testing.tools.configuration;
 
-import hu.zforgo.StringUtil;
+import hu.zforgo.common.util.StringUtil;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
