@@ -3,7 +3,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>hu.zforgo.testing</groupId>
+		<groupId>hu.zforgo.testing.junit</groupId>
 		<artifactId>002-multiple-pathprovider</artifactId>
 		<version>@project.version@</version>
 	</parent>
@@ -13,12 +13,12 @@
 	<dependencies>
 		<!-- DO NOT CHANGE THE ORDER -->
 		<dependency>
-			<groupId>hu.zforgo.testing</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>module-b</artifactId>
 			<version>@project.version@</version>
 		</dependency>
 		<dependency>
-			<groupId>hu.zforgo.testing</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>module-a</artifactId>
 			<version>@project.version@</version>
 		</dependency>

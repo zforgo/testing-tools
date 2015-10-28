@@ -1,6 +1,7 @@
 package hu.zforgo.junit.tools.context;
 
-import hu.zforgo.junit.tools.configuration.Configuration;
+import hu.zforgo.testing.context.ConfigurationPathProvider;
+import hu.zforgo.testing.tools.configuration.Configuration;
 
 import java.nio.file.Path;
 import java.util.List;

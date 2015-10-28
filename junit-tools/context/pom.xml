@@ -30,7 +30,8 @@
 				<version>2.0.0</version>
 				<configuration>
 					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-					<settingsFile>../junit-tools/context/src/it/settings.xml</settingsFile>
+					<settingsFile>../context/src/it/settings.xml</settingsFile>
+					<!--<settingsFile>../junit-tools/context/src/it/settings.xml</settingsFile>-->
 					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
 					<!--<postBuildHookScript>verify</postBuildHookScript> &lt;!&ndash; no extension required &ndash;&gt;-->
 				</configuration>
