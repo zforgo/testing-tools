@@ -147,5 +147,6 @@
 	<modules>
 		<module>commons</module>
 		<module>junit-tools</module>
+		<module>testng-tools</module>
 	</modules>
 </project>
