@@ -1,7 +1,9 @@
 package hu.zforgo.common.util;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.ServiceLoader;
 
 public class ClassUtil {
 
@@ -31,6 +33,26 @@ public class ClassUtil {
 		} catch (IllegalAccessException e) {
 			throw new NoSuchFieldException(String.format("Couldn't get value for field %s.%s", cl, fieldName));
 		}
-
 	}
+
+	public static <T> T loadService(Class<T> serviceClass) {
+		Iterator<T> providerIterator = ServiceLoader.load(serviceClass).iterator();
+		return providerIterator.hasNext() ? providerIterator.next() : null;
+	}
+
+	public static <T> T loadService(Class<T> serviceClass, ClassLoader cl) {
+		Iterator<T> providerIterator = ServiceLoader.load(serviceClass, cl).iterator();
+		return providerIterator.hasNext() ? providerIterator.next() : null;
+	}
+
+	public static <T> T loadService(Class<T> serviceClass, DefaultServiceCreator<T> creator) {
+		Iterator<T> providerIterator = ServiceLoader.load(serviceClass).iterator();
+		return providerIterator.hasNext() ? providerIterator.next() : creator.create();
+	}
+
+	public static <T> T loadService(Class<T> serviceClass, ClassLoader cl, DefaultServiceCreator<T> creator) {
+		Iterator<T> providerIterator = ServiceLoader.load(serviceClass, cl).iterator();
+		return providerIterator.hasNext() ? providerIterator.next() : creator.create();
+	}
+
 }
