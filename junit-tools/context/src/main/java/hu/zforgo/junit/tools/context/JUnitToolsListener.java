@@ -13,7 +13,13 @@ public class JUnitToolsListener extends RunListener {
 	}
 
 	@Override
-	public void testRunFinished(Result result) throws Exception {
-		JUnitToolsContext.getInstance().finalize(result);
+	public void testRunFinished(Result result) {
+		try {
+			JUnitToolsContext.getInstance().shutdown(result);
+		} catch (Throwable t) {
+			//TODO find a better class
+			throw new AssertionError(t);
+		}
+
 	}
 }

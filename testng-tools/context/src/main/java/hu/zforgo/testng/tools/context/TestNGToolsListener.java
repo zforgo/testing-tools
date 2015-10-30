@@ -7,7 +7,7 @@ public class TestNGToolsListener implements IExecutionListener {
 
 	@Override
 	public void onExecutionStart() {
-
+		TestNGToolsContext.createContext();
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 
-public abstract class TestingToolsContext<T extends TestingToolsContext> {
+public abstract class TestingToolsContext {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TestingToolsContext.class);
 	private static volatile boolean inited;
@@ -30,7 +30,7 @@ public abstract class TestingToolsContext<T extends TestingToolsContext> {
 	private final transient ReentrantLock lock = new ReentrantLock();
 
 
-	protected static synchronized void createContext(Object initParams) throws ContextInitializationException {
+	protected static synchronized void createContext(Object initParams) {
 		if (instance != null) {
 			LOG.warn("Testing Tools context class ({}) has already created.", instance.getClass().getName());
 			return;
@@ -95,6 +95,9 @@ public abstract class TestingToolsContext<T extends TestingToolsContext> {
 		inited = true;
 	}
 
+	protected synchronized void shutdown() throws Throwable {
+		finalize();
+	}
 	protected synchronized void finalize() throws Throwable {
 		inited = false;
 		super.finalize();
