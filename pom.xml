@@ -89,7 +89,7 @@
 					<includes>
 						<include>**/*</include>
 					</includes>
-					<repositoryName>junit-tools</repositoryName>
+					<repositoryName>testing-tools</repositoryName>
 					<repositoryOwner>zforgo</repositoryOwner>
 				</configuration>
 				<executions>

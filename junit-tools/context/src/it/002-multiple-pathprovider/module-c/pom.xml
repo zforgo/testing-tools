@@ -2,31 +2,28 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>hu.zforgo.testing.testng</groupId>
-	<artifactId>002-configured-context</artifactId>
-	<version>@project.version@</version>
+	<parent>
+		<groupId>hu.zforgo.testing.junit</groupId>
+		<artifactId>002-multiple-pathprovider</artifactId>
+		<version>@project.version@</version>
+	</parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
+	<artifactId>module-c</artifactId>
 
 	<dependencies>
+		<!-- DO NOT CHANGE THE ORDER -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>context</artifactId>
+			<artifactId>module-b</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>3.1.0</version>
-			<scope>test</scope>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>module-a</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -35,18 +32,18 @@
 				<version>2.18.1</version>
 				<configuration>
 					<systemPropertyVariables>
-						<config.root>${basedir}/config</config.root>
+						<config.root>${project.parent.basedir}/config</config.root>
 					</systemPropertyVariables>
 					<forkCount>0</forkCount>
 					<properties>
 						<property>
 							<name>listener</name>
-							<value>hu.zforgo.testng.tools.context.TestNGToolsListener</value>
+							<value>hu.zforgo.junit.tools.context.JUnitToolsListener</value>
 						</property>
 					</properties>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-</project>
 
+</project>
