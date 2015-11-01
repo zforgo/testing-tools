@@ -1,4 +1,4 @@
-package hu.zforgo.testing.tools.context;
+package hu.zforgo.junit.tools.context;
 
 import hu.zforgo.testing.context.TestingToolsContext;
 import org.junit.runner.Description;
