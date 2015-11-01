@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hu.zforgo.testing</groupId>
+		<artifactId>commons</artifactId>
+		<version>0.2.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>common-context</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>configuration</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-invoker-plugin</artifactId>
+				<version>2.0.0</version>
+				<configuration>
+					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+					<settingsFile>../../junit-tools/context/src/it/it/settings.xml</settingsFile>
+					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+					<!--<postBuildHookScript>verify</postBuildHookScript> &lt;!&ndash; no extension required &ndash;&gt;-->
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>install</goal>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
