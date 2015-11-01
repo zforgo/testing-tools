@@ -23,7 +23,7 @@
 				<version>2.0.0</version>
 				<configuration>
 					<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-					<settingsFile>../../commons/common-context/src/it/settings.xml</settingsFile>
+					<settingsFile>../../junit-tools/context/src/it/it/settings.xml</settingsFile>
 					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
 					<!--<postBuildHookScript>verify</postBuildHookScript> &lt;!&ndash; no extension required &ndash;&gt;-->
 				</configuration>

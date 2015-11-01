@@ -5,7 +5,7 @@ import hu.zforgo.testing.context.TestingToolsContext;
 
 public class TestNGToolsContext extends TestingToolsContext {
 
-	private TestNGToolsContext() {
+	public TestNGToolsContext() {
 	}
 
 	protected static synchronized void createContext() {

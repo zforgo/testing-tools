@@ -104,8 +104,8 @@ public abstract class TestingToolsContext {
 	}
 
 
-	public static <T> T getInstance() {
-		return (T) instance;
+	public static TestingToolsContext getInstance() {
+		return instance;
 	}
 
 	public Configuration getConfig(String name, Configuration defaultConfig) {

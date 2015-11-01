@@ -7,7 +7,7 @@ import org.junit.runner.Result;
 
 public class JUnitToolsContext extends TestingToolsContext {
 
-	private JUnitToolsContext() {
+	public JUnitToolsContext() {
 	}
 
 	protected static synchronized void createContext(Description description) {
