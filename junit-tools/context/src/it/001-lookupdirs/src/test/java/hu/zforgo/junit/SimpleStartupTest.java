@@ -1,10 +1,10 @@
 package hu.zforgo.junit;
 
 import hu.zforgo.common.util.ClassUtil;
+import hu.zforgo.junit.tools.context.JUnitToolsContext;
 import hu.zforgo.testing.context.Defaults;
 import hu.zforgo.testing.tools.configuration.Configuration;
 import hu.zforgo.testing.tools.configuration.SimpleConfiguration;
-import hu.zforgo.testing.tools.context.JUnitToolsContext;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.Test;
 
