@@ -37,6 +37,7 @@ public abstract class TestingToolsContext {
 		}
 		LOG.info("Creating TestingToolsContext...");
 
+		//set classloader
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		if (cl == null) {
 			cl = TestingToolsContext.class.getClassLoader();
@@ -48,9 +49,11 @@ public abstract class TestingToolsContext {
 			contextClassLoader = cl;
 		}
 
+		//create context class by service loader
 		TestingToolsContext currentContext = ClassUtil.loadService(TestingToolsContext.class, contextClassLoader, DefaultContext::new);
 
 		try {
+			//load context configuration (default is: testingtools.properties)
 			{
 				final String configFilename = StringUtil.isEmpty(System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE)) ? Defaults.CONFIG_FILENAME : System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE);
 				Configuration tmp = ConfigurationFactory.load(configFilename);
@@ -61,13 +64,28 @@ public abstract class TestingToolsContext {
 					contextConfig = tmp;
 				}
 			}
+
+			//prepare config lookup dir(s)
 			{
 				List<Path> tmp = prepareConfigPaths();
 				if (configLookupFolders == null) {
 					configLookupFolders = Collections.unmodifiableList(tmp);
 				}
 			}
+			//init context
 			currentContext.init(initParams);
+
+			//load and call ContextInitialiters by Service loader
+			ClassUtil.loadServices(ContextInitializer.class).stream()
+					.forEach(s -> {
+						try {
+							LOG.info("Calling ContextInitializer: " + s);
+							s.init(currentContext, contextConfig);
+							LOG.info(String.format("ContextInitializer [%s] finished successfully", s));
+						} catch (ContextInitializationException e) {
+							LOG.warn(String.format("ConextInitializer [%s] threw an exception", s), e);
+						}
+					});
 		} catch (ContextInitializationException e) {
 			LOG.error("An error occurred during initialize context", e);
 		} catch (Exception e) {
@@ -96,10 +114,21 @@ public abstract class TestingToolsContext {
 	}
 
 	protected synchronized void shutdown() throws Throwable {
-		finalize();
-	}
-	protected synchronized void finalize() throws Throwable {
 		inited = false;
+
+		ClassUtil.loadServices(ContextInitializer.class).stream()
+				.forEach(s -> {
+					try {
+						LOG.info("Calling ContextInitializer: " + s);
+						s.shutdown();
+						LOG.info(String.format("ContextInitializer [%s] has been shut down successfully", s));
+					} catch (Exception e) {
+						LOG.warn(String.format("ConextInitializer [%s] threw an exception", s), e);
+					}
+				});
+	}
+
+	protected synchronized void finalize() throws Throwable {
 		super.finalize();
 	}
 

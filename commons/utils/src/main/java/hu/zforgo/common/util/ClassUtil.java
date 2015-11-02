@@ -2,8 +2,13 @@ package hu.zforgo.common.util;
 
 import java.lang.reflect.Field;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.ServiceLoader;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class ClassUtil {
 
@@ -55,4 +60,9 @@ public class ClassUtil {
 		return providerIterator.hasNext() ? providerIterator.next() : creator.create();
 	}
 
+	public static <T> List<T> loadServices(Class<T> serviceClass) {
+		return StreamSupport.stream(
+				Spliterators.spliteratorUnknownSize(ServiceLoader.load(serviceClass).iterator(), Spliterator.ORDERED), false)
+				.collect(Collectors.toList());
+	}
 }
