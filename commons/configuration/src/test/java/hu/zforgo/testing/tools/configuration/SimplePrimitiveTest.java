@@ -6,28 +6,6 @@ import static org.assertj.core.api.StrictAssertions.assertThat;
 
 public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
-	private static final byte byteValue = 42;
-	private static final byte byteValueNegative = -37;
-	private static final byte byteDefaultValue = 89;
-
-	private static final short shortValue = 32549;
-	private static final short shortValueNegative = -12557;
-	private static final short shortDefaultValue = 6899;
-
-	private static final int intValue = 43801;
-	private static final int intValueNegative = -697654;
-	private static final int intDefaultValue = -876899;
-
-	private static final long longDefaultValue = -876899L;
-
-	private static final float floatValueLow = 12.8767f;
-	private static final float floatValue = 11223372036854775807f;
-	private static final double floatValueAsDouble = 11223372036854775807d;
-	private static final float floatValueHasdecimals = 11223372036854775807.234954657821f;
-
-	private static final double doubleValue = 54340282346638528860000000000000000000000.000000;
-	private static final double doubleValueNegative = -5340282346638528860000000000000000000000.000000;
-
 	public SimplePrimitiveTest(String type, Configuration c) {
 		super(type, c);
 	}
@@ -147,7 +125,7 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 
 
 		checkInvalidNumber(() -> c.floatValue("string.value"));
-		checkInvalidNumber(() -> c.floatValue("string.value", intDefaultValue));
+		checkInvalidNumber(() -> c.floatValue("string.value", floatValue));
 	}
 
 
@@ -172,7 +150,7 @@ public class SimplePrimitiveTest extends SimpleConfigurationTest {
 //		assertThat(c.doubleValue("double.value.negative")).isEqualTo(doubleValueNegative);
 
 
-		checkInvalidNumber(() -> c.floatValue("string.value"));
-		checkInvalidNumber(() -> c.floatValue("string.value", intDefaultValue));
+		checkInvalidNumber(() -> c.doubleValue("string.value"));
+		checkInvalidNumber(() -> c.doubleValue("string.value", doubleValue));
 	}
 }

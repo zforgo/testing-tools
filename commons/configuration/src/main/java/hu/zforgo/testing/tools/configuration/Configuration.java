@@ -26,6 +26,10 @@ public interface Configuration {
 
 	boolean boolValue(String key, boolean defaultValue);
 
+	Boolean getBoolean(String key);
+
+	Boolean getBoolean(String key, Boolean defaultValue);
+
 	byte byteValue(String key);
 
 	byte byteValue(String key, byte defaultValue);

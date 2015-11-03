@@ -43,6 +43,16 @@ abstract class AbstractConfiguration implements Configuration {
 	}
 
 	@Override
+	public Boolean getBoolean(String key) {
+		return boolValue(key);
+	}
+
+	@Override
+	public Boolean getBoolean(String key, Boolean defaultValue) {
+		return safe(() -> getBoolean(key), defaultValue);
+	}
+
+	@Override
 	public byte byteValue(String key) {
 		return Byte.parseByte(get(key).toString().trim());
 	}

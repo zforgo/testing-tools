@@ -17,7 +17,28 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
 public abstract class SimpleConfigurationTest extends AbstractConfigurationTest {
 
-	private static final String PROPERTIES_NAME = "test.properties";
+	protected static final byte byteValue = 42;
+	protected static final byte byteValueNegative = -37;
+	protected static final byte byteDefaultValue = 89;
+
+	protected static final short shortValue = 32549;
+	protected static final short shortValueNegative = -12557;
+	protected static final short shortDefaultValue = 6899;
+
+	protected static final int intValue = 43801;
+	protected static final int intValueNegative = -697654;
+	protected static final int intDefaultValue = -876899;
+
+	protected static final long longDefaultValue = -876899L;
+
+	protected static final float floatValueLow = 12.8767f;
+	protected static final float floatValue = 11223372036854775807f;
+	protected static final double floatValueAsDouble = 11223372036854775807d;
+	protected static final float floatValueHasdecimals = 11223372036854775807.234954657821f;
+
+	protected static final double doubleValue = 54340282346638528860000000000000000000000.000000;
+	protected static final double doubleValueNegative = -5340282346638528860000000000000000000000.000000;
+	protected static final String PROPERTIES_NAME = "test.properties";
 
 	public SimpleConfigurationTest(String type, Configuration c) {
 		super(type, c);
