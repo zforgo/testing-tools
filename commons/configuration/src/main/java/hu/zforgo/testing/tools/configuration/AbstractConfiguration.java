@@ -7,6 +7,19 @@ import java.util.NoSuchElementException;
 
 abstract class AbstractConfiguration implements Configuration {
 
+	@FunctionalInterface
+	private interface Callable<T> {
+		T call();
+	}
+
+	private <T> T safe(Callable<T> c, T defaultValue) {
+		try {
+			return c.call();
+		} catch (NoSuchElementException e) {
+			return defaultValue;
+		}
+	}
+
 	public abstract Object get(String key);
 
 	@Override
@@ -26,11 +39,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public boolean boolValue(String key, boolean defaultValue) {
-		try {
-			return boolValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> boolValue(key), defaultValue);
 	}
 
 	@Override
@@ -40,11 +49,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public byte byteValue(String key, byte defaultValue) {
-		try {
-			return byteValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> byteValue(key), defaultValue);
 	}
 
 	@Override
@@ -54,11 +59,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public short shortValue(String key, short defaultValue) {
-		try {
-			return shortValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> shortValue(key), defaultValue);
 	}
 
 	@Override
@@ -68,11 +69,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public int intValue(String key, int defaultValue) {
-		try {
-			return intValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> intValue(key), defaultValue);
 	}
 
 	@Override
@@ -82,11 +79,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public long longValue(String key, long defaultValue) {
-		try {
-			return longValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> longValue(key), defaultValue);
 	}
 
 	@Override
@@ -96,11 +89,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public float floatValue(String key, float defaultValue) {
-		try {
-			return floatValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> floatValue(key), defaultValue);
 	}
 
 	@Override
@@ -110,11 +99,67 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public double doubleValue(String key, double defaultValue) {
-		try {
-			return doubleValue(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> doubleValue(key), defaultValue);
+	}
+
+	@Override
+	public Byte getByte(String key) {
+		return Byte.valueOf(getString(key));
+	}
+
+	@Override
+	public Byte getByte(String key, Byte defaultValue) {
+		return safe(() -> getByte(key), defaultValue);
+	}
+
+	@Override
+	public Short getShort(String key) {
+		return Short.valueOf(getString(key));
+	}
+
+	@Override
+	public Short getShort(String key, Short defaultValue) {
+		return safe(() -> getShort(key), defaultValue);
+	}
+
+	@Override
+	public Integer getInteger(String key) {
+		return Integer.valueOf(getString(key));
+	}
+
+	@Override
+	public Integer getInteger(String key, Integer defaultValue) {
+		return safe(() -> getInteger(key), defaultValue);
+	}
+
+	@Override
+	public Long getLong(String key) {
+		return Long.valueOf(getString(key));
+	}
+
+	@Override
+	public Long getLong(String key, Long defaultValue) {
+		return safe(() -> getLong(key), defaultValue);
+	}
+
+	@Override
+	public Float getFloat(String key) {
+		return Float.valueOf(getString(key));
+	}
+
+	@Override
+	public Float getFloat(String key, Float defaultValue) {
+		return safe(() -> getFloat(key), defaultValue);
+	}
+
+	@Override
+	public Double getDouble(String key) {
+		return Double.valueOf(getString(key));
+	}
+
+	@Override
+	public Double getDouble(String key, Double defaultValue) {
+		return safe(() -> getDouble(key), defaultValue);
 	}
 
 	@Override
@@ -124,11 +169,7 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public String getString(String key, String defaultValue) {
-		try {
-			return getString(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> getString(key), defaultValue);
 	}
 
 	@Override
@@ -143,19 +184,11 @@ abstract class AbstractConfiguration implements Configuration {
 
 	@Override
 	public String[] getStringArray(String key, String[] defaultValue) {
-		try {
-			return getStringArray(key);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> getStringArray(key), defaultValue);
 	}
 
 	@Override
 	public String[] getStringArray(String key, char delimiter, String[] defaultValue) {
-		try {
-			return getStringArray(key, delimiter);
-		} catch (NoSuchElementException e) {
-			return defaultValue;
-		}
+		return safe(() -> getStringArray(key, delimiter), defaultValue);
 	}
 }
