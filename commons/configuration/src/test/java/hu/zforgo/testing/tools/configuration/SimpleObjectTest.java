@@ -167,8 +167,6 @@ public class SimpleObjectTest extends SimpleConfigurationTest {
 		assertThat(c.getDouble("byte.value.negative")).isExactlyInstanceOf(Double.class).isEqualTo(byteValueNegative);
 		assertThat(c.getDouble("short.value")).isExactlyInstanceOf(Double.class).isEqualTo(shortValue);
 		assertThat(c.getDouble("short.value.negative")).isExactlyInstanceOf(Double.class).isEqualTo(shortValueNegative);
-		assertThat(c.getDouble("short.value")).isExactlyInstanceOf(Double.class).isEqualTo(shortValue);
-		assertThat(c.getDouble("short.value.negative")).isExactlyInstanceOf(Double.class).isEqualTo(shortValueNegative);
 		assertThat(c.getDouble("int.value")).isExactlyInstanceOf(Double.class).isEqualTo(intValue);
 		assertThat(c.getDouble("int.value.negative")).isExactlyInstanceOf(Double.class).isEqualTo(intValueNegative);
 		assertThat(c.getDouble("long.min.value")).isExactlyInstanceOf(Double.class).isEqualTo(Long.MIN_VALUE);

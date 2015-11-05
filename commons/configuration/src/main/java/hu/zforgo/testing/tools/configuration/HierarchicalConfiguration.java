@@ -45,6 +45,12 @@ public class HierarchicalConfiguration extends AbstractConfiguration {
 			return parent.get(key);
 		}
 		throw new NoSuchElementException("Configuration key not found: " + key);
+	}
 
+	@Override
+	public Configuration submap(String prefix) {
+		Objects.requireNonNull(prefix, "Prefix cannot be null!");
+		return new HierarchicalConfiguration(
+				current.submap(prefix), parent.submap(prefix));
 	}
 }

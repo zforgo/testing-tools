@@ -14,9 +14,16 @@ public interface Configuration {
 		public boolean isEmpty() {
 			return true;
 		}
+
+		@Override
+		public Configuration submap(String prefix) {
+			return this;
+		}
 	};
 
 	boolean isEmpty();
+
+	Configuration submap(String prefix);
 
 	Object get(String key);
 

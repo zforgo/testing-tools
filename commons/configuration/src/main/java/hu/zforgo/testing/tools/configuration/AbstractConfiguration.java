@@ -4,8 +4,13 @@ package hu.zforgo.testing.tools.configuration;
 import hu.zforgo.common.util.StringUtil;
 
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 abstract class AbstractConfiguration implements Configuration {
+
+	private static final Set<String> BOOLEAN_LIKE = Stream.of("enable", "enabled", "on", "1").collect(Collectors.toSet());
 
 	@FunctionalInterface
 	private interface Callable<T> {
@@ -34,7 +39,7 @@ abstract class AbstractConfiguration implements Configuration {
 	@Override
 	public boolean boolValue(String key) {
 		Object o = get(key);
-		return o != null && ((o instanceof String && ((String) o).trim().equals("1")) || Boolean.parseBoolean(o.toString().trim()));
+		return o != null && ((o instanceof String && BOOLEAN_LIKE.contains(((String) o).trim().toLowerCase())) || Boolean.parseBoolean(o.toString().trim()));
 	}
 
 	@Override
