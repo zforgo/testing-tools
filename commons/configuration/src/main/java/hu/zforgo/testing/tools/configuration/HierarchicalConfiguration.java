@@ -53,4 +53,11 @@ public class HierarchicalConfiguration extends AbstractConfiguration {
 		return new HierarchicalConfiguration(
 				current.submap(prefix), parent.submap(prefix));
 	}
+
+	@Override
+	public Configuration remains(String prefix) {
+		Objects.requireNonNull(prefix, "Prefix cannot be null!");
+		return new HierarchicalConfiguration(
+				current.remains(prefix), parent.remains(prefix));
+	}
 }

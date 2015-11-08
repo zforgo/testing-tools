@@ -19,11 +19,18 @@ public interface Configuration {
 		public Configuration submap(String prefix) {
 			return this;
 		}
+
+		@Override
+		public Configuration remains(String prefix) {
+			return this;
+		}
 	};
 
 	boolean isEmpty();
 
 	Configuration submap(String prefix);
+
+	Configuration remains(String prefix);
 
 	Object get(String key);
 

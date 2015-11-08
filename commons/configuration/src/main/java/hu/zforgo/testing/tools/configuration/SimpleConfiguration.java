@@ -45,4 +45,13 @@ public class SimpleConfiguration extends AbstractConfiguration {
 				.filter(p -> p.getKey().startsWith(prefix))
 				.collect(Collectors.toMap(e -> e.getKey().substring(prefix.length()), Map.Entry::getValue)));
 	}
+
+	@Override
+	public Configuration remains(String prefix) {
+		Objects.requireNonNull(prefix, "Prefix cannot be null!");
+		return new SimpleConfiguration(props.entrySet()
+				.stream()
+				.filter(p -> !p.getKey().startsWith(prefix))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
 }
