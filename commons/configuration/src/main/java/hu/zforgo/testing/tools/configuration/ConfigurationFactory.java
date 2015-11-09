@@ -62,4 +62,12 @@ public class ConfigurationFactory {
 		return c;
 	}
 
+	public static Configuration load(String name, Collection<Path> paths, Configuration parent) throws IOException {
+		try {
+			Configuration c = load(name, paths);
+			return c == null || c.isEmpty() ? parent : new HierarchicalConfiguration(c, parent);
+		} catch (IOException e) {
+			return parent;
+		}
+	}
 }

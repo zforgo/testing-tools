@@ -54,8 +54,8 @@ public abstract class TestingToolsContext {
 
 		try {
 			//load context configuration (default is: testingtools.properties)
+			final String configFilename = StringUtil.isEmpty(System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE)) ? Defaults.CONFIG_FILENAME : System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE);
 			{
-				final String configFilename = StringUtil.isEmpty(System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE)) ? Defaults.CONFIG_FILENAME : System.getProperty(Defaults.CONFIG_FILENAME_VARIABLE);
 				Configuration tmp = ConfigurationFactory.load(configFilename);
 				if (contextConfig == null) {
 					if (tmp.isEmpty()) {
@@ -72,6 +72,12 @@ public abstract class TestingToolsContext {
 					configLookupFolders = Collections.unmodifiableList(tmp);
 				}
 			}
+
+			//load additional configuration from lookup folders if it necessary
+			if (contextConfig.boolValue("load.addtitionals", true)) {
+				contextConfig = ConfigurationFactory.load(configFilename, configLookupFolders, contextConfig);
+			}
+
 			//init context
 			currentContext.init(initParams);
 
