@@ -11,6 +11,10 @@ import java.util.stream.Stream;
 
 public class CollectionUtil {
 
+	public static <T> boolean isEmpty(T[]... input) {
+		return input == null || input.length == 0;
+	}
+
 	public static boolean isEmpty(Collection input) {
 		return input == null || input.isEmpty();
 	}

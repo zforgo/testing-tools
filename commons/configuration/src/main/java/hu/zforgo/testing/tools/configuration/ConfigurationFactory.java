@@ -1,6 +1,8 @@
 package hu.zforgo.testing.tools.configuration;
 
 
+import hu.zforgo.common.util.CollectionUtil;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -69,5 +71,20 @@ public class ConfigurationFactory {
 		} catch (IOException e) {
 			return parent;
 		}
+	}
+
+	public static Configuration merge(Configuration... configurations) {
+		if (CollectionUtil.isEmpty(configurations)) {
+			return Configuration.EMPTY;
+		}
+		if (configurations.length == 1) {
+			return configurations[0];
+		}
+
+		Configuration result = configurations[0];
+		for (int i = 1; i < configurations.length; i++) {
+			result = new HierarchicalConfiguration(result, configurations[i]);
+		}
+		return result;
 	}
 }
