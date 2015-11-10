@@ -159,5 +159,6 @@
 		<module>commons</module>
 		<module>junit-tools</module>
 		<module>testng-tools</module>
+		<module>selenium-tools</module>
 	</modules>
 </project>
