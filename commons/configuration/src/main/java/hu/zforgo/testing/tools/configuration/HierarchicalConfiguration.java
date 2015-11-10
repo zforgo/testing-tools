@@ -60,4 +60,12 @@ public class HierarchicalConfiguration extends AbstractConfiguration {
 		return new HierarchicalConfiguration(
 				current.remains(prefix), parent.remains(prefix));
 	}
+
+	//TODO use CollectionUtil
+	@Override
+	public Map<String, Object> asMap() {
+		Map<String, Object> p = parent.asMap();
+		p.putAll(current.asMap());
+		return p;
+	}
 }

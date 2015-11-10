@@ -1,5 +1,7 @@
 package hu.zforgo.testing.tools.configuration;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public interface Configuration {
@@ -24,6 +26,11 @@ public interface Configuration {
 		public Configuration remains(String prefix) {
 			return this;
 		}
+
+		@Override
+		public Map<String, Object> asMap() {
+			return Collections.emptyMap();
+		}
 	};
 
 	boolean isEmpty();
@@ -31,6 +38,8 @@ public interface Configuration {
 	Configuration submap(String prefix);
 
 	Configuration remains(String prefix);
+
+	Map<String, Object> asMap();
 
 	Object get(String key);
 

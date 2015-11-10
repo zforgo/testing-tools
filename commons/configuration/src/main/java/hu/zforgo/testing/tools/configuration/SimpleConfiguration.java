@@ -3,6 +3,8 @@ package hu.zforgo.testing.tools.configuration;
 
 import hu.zforgo.common.util.CollectionUtil;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -15,13 +17,13 @@ public class SimpleConfiguration extends AbstractConfiguration {
 
 	public SimpleConfiguration(Properties props) {
 		Objects.requireNonNull(props, "props must not be null");
-		this.props = props.entrySet().stream()
-				.collect(Collectors.toMap(e -> String.valueOf(e.getKey()), Map.Entry::getValue));
+		this.props = Collections.unmodifiableMap(props.entrySet().stream()
+				.collect(Collectors.toMap(e -> String.valueOf(e.getKey()), Map.Entry::getValue)));
 	}
 
 	public SimpleConfiguration(Map<String, Object> props) {
 		Objects.requireNonNull(props, "props must not be null");
-		this.props = props;
+		this.props = Collections.unmodifiableMap(props);
 	}
 
 	public boolean isEmpty() {
@@ -53,5 +55,10 @@ public class SimpleConfiguration extends AbstractConfiguration {
 				.stream()
 				.filter(p -> !p.getKey().startsWith(prefix))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+	}
+
+	@Override
+	public Map<String, Object> asMap() {
+		return new HashMap<>(props);
 	}
 }
