@@ -6,11 +6,15 @@ import hu.zforgo.testing.context.ContextInitializationFailure;
 import hu.zforgo.testing.context.ContextInitializer;
 import hu.zforgo.testing.context.TestingToolsContext;
 import hu.zforgo.testing.tools.configuration.Configuration;
+import hu.zforgo.testing.tools.configuration.ConfigurationFactory;
+import javaslang.Tuple;
 import org.openqa.selenium.Proxy;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SeleniumContextInitializer implements ContextInitializer {
 
@@ -22,6 +26,8 @@ public class SeleniumContextInitializer implements ContextInitializer {
 	private static final String key_ENABLED = "enabled";
 	private static final char DOT = '.';
 
+	private static volatile Proxy defaultProxy;
+	private static volatile boolean defaultProxyEnabled;
 
 	@Override
 	public void init(TestingToolsContext context, Configuration contextConfig) throws ContextInitializationException, ContextInitializationFailure {
@@ -29,27 +35,24 @@ public class SeleniumContextInitializer implements ContextInitializer {
 		Configuration proxies = contextConfig.submap(prefix_PROXY);
 		Configuration defaultProxyConfig = proxies.submap(prefix_DEFAULT);
 
-		final boolean defaultProxyEnabled = defaultProxyConfig.boolValue(key_ENABLED, true);
+		defaultProxyEnabled = defaultProxyConfig.boolValue(key_ENABLED, true);
+		defaultProxy = defaultProxyEnabled && !defaultProxyConfig.isEmpty() ? new Proxy(defaultProxyConfig.asMap()) : null;
 
-		final Proxy defaultProxy = defaultProxyEnabled && !defaultProxyConfig.isEmpty() ? new Proxy(defaultProxyConfig.asMap()) : null;
-
-		Map<DriverSetup, Proxy> proxyMap = new HashMap<>();
-		Arrays.stream(DriverSetup.values())
-				.forEach(d -> proxyMap.put(d, buildProxy(proxies.submap(d.name() + DOT), defaultProxy, defaultProxyEnabled)));
-		System.out.println(proxyMap);
+		Map<DriverSetup, Proxy> proxyMap = Arrays.stream(DriverSetup.values())
+				.map(d -> Tuple.of(d, buildProxy(proxies.submap(d.name() + DOT))))
+				.filter(t -> Objects.nonNull(t._2))
+				.collect(Collectors.toMap(t -> t._1, t -> t._2));
 
 //init capabilities
-//		Configuration capabilities = contextConfig.submap(prefix_PROXY);
-//		Configuration defaultCapability = capabilities.submap(prefix_DEFAULT);
-//		DesiredCapabilities desiredCapabilities = !defaultCapability.isEmpty() ? new DesiredCapabilities()
-//		Map<DriverSetup, DesiredCapabilities> capabilitiesMap = new HashMap<>();
+		Configuration capabilities = contextConfig.submap(prefix_DRIVER);
+		Configuration defaultCapability = capabilities.submap(prefix_DEFAULT);
+		Map<DriverSetup, Configuration> capabilityMap = Arrays.stream(DriverSetup.values())
+				.collect(
+						Collectors.toMap(Function.identity(), d -> ConfigurationFactory.merge(capabilities.submap(d.name() + DOT), defaultCapability)));
 	}
 
-//	private DesiredCapabilities buildCapabilities(Configuration c) {
-//
-//	}
-	private Proxy buildProxy(Configuration c, Proxy defaultProxy, boolean defaultEnabled) {
-		if (!c.boolValue(key_ENABLED, defaultEnabled)) {
+	private Proxy buildProxy(Configuration c) {
+		if (!c.boolValue(key_ENABLED, defaultProxyEnabled)) {
 			return null;
 		}
 		Map<String, Object> c2 = c.remains(key_ENABLED).asMap();
