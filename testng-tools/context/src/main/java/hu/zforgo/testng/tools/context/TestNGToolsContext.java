@@ -4,7 +4,7 @@ import hu.zforgo.testing.context.TestingToolsContext;
 
 
 public class TestNGToolsContext extends TestingToolsContext {
-
+//dummy
 	public TestNGToolsContext() {
 	}
 
