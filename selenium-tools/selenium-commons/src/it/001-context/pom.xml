@@ -3,7 +3,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>hu.zforgo.testing.selenium</groupId>
-	<artifactId>001-proxy</artifactId>
+	<artifactId>001-context</artifactId>
 	<version>0.3.0-SNAPSHOT</version>
 	<!--<version>@project.version@</version>-->
 

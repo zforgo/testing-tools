@@ -9,6 +9,8 @@ import hu.zforgo.testing.tools.configuration.Configuration;
 import hu.zforgo.testing.tools.configuration.ConfigurationFactory;
 import javaslang.Tuple;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +79,11 @@ public final class SeleniumContext implements ContextInitializer {
 
 	public static SeleniumContext getInstance() {
 		return instance;
+	}
+
+	public WebDriver driver(DriverSetup ds) {
+		DesiredCapabilities cap = ds.buildCapabilities(configuredProxies.get(ds), additionalCapabilities.getOrDefault(ds, Configuration.EMPTY));
+		return ds.driver(cap);
 	}
 
 	@Override
