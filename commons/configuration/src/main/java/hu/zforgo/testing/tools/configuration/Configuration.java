@@ -1,17 +1,20 @@
 package hu.zforgo.testing.tools.configuration;
 
+import hu.zforgo.common.util.StringUtil;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public interface Configuration {
 
-	Configuration EMPTY = new AbstractConfiguration() {
-		@Override
-		public Object get(String key) {
-			throw new NoSuchElementException("Configuration key not found: " + key);
-		}
+	Set<String> BOOLEAN_LIKE = Stream.of("enable", "enabled", "on", "1").collect(Collectors.toSet());
 
+	Configuration EMPTY = new Configuration() {
 		@Override
 		public boolean isEmpty() {
 			return true;
@@ -31,7 +34,20 @@ public interface Configuration {
 		public Map<String, Object> asMap() {
 			return Collections.emptyMap();
 		}
+
+		@Override
+		public Object get(String key) {
+			throw new NoSuchElementException("Configuration key not found: " + key);
+		}
 	};
+
+	default <T> T safe(Supplier<T> c, T defaultValue) {
+		try {
+			return c.get();
+		} catch (NoSuchElementException e) {
+			return defaultValue;
+		}
+	}
 
 	boolean isEmpty();
 
@@ -43,74 +59,159 @@ public interface Configuration {
 
 	Object get(String key);
 
-	Object get(String key, Object defaultValue);
+	default Object get(String key, Object defaultValue) {
+		return safe(() -> get(key), defaultValue);
+	}
 
-	boolean boolValue(String key);
+	default boolean boolValue(String key) {
+		Object o = get(key);
+		return o != null && ((o instanceof String && BOOLEAN_LIKE.contains(((String) o).trim().toLowerCase())) || Boolean.parseBoolean(o.toString().trim()));
+	}
 
-	boolean boolValue(String key, boolean defaultValue);
+	default boolean boolValue(String key, boolean defaultValue) {
+		return safe(() -> boolValue(key), defaultValue);
+	}
 
-	Boolean getBoolean(String key);
+	default Boolean getBoolean(String key) {
+		return boolValue(key);
+	}
 
-	Boolean getBoolean(String key, Boolean defaultValue);
+	default Boolean getBoolean(String key, Boolean defaultValue) {
+		return safe(() -> getBoolean(key), defaultValue);
+	}
 
-	byte byteValue(String key);
+	default byte byteValue(String key) {
+		return Byte.parseByte(get(key).toString().trim());
+	}
 
-	byte byteValue(String key, byte defaultValue);
+	default byte byteValue(String key, byte defaultValue) {
+		return safe(() -> byteValue(key), defaultValue);
+	}
 
-	short shortValue(String key);
+	default short shortValue(String key) {
+		return Short.parseShort(get(key).toString().trim());
+	}
 
-	short shortValue(String key, short defaultValue);
+	default short shortValue(String key, short defaultValue) {
+		return safe(() -> shortValue(key), defaultValue);
+	}
 
-	int intValue(String key);
+	default int intValue(String key) {
+		return Integer.parseInt(get(key).toString().trim());
+	}
 
-	int intValue(String key, int defaultValue);
+	default int intValue(String key, int defaultValue) {
+		return safe(() -> intValue(key), defaultValue);
+	}
 
-	long longValue(String key);
+	default long longValue(String key) {
+		return Long.parseLong(get(key).toString().trim());
+	}
 
-	long longValue(String key, long defaultValue);
+	default long longValue(String key, long defaultValue) {
+		return safe(() -> longValue(key), defaultValue);
+	}
 
-	float floatValue(String key);
+	default float floatValue(String key) {
+		return Float.parseFloat(get(key).toString().trim());
+	}
 
-	float floatValue(String key, float defaultValue);
+	default float floatValue(String key, float defaultValue) {
+		return safe(() -> floatValue(key), defaultValue);
+	}
 
-	double doubleValue(String key);
+	default double doubleValue(String key) {
+		return Double.parseDouble(get(key).toString().trim());
+	}
 
-	double doubleValue(String key, double defaultValue);
+	default double doubleValue(String key, double defaultValue) {
+		return safe(() -> doubleValue(key), defaultValue);
+	}
 
-	Byte getByte(String key);
+	default Byte getByte(String key) {
+		return Byte.valueOf(getString(key));
+	}
 
-	Byte getByte(String key, Byte defaultValue);
+	default Byte getByte(String key, Byte defaultValue) {
+		return safe(() -> getByte(key), defaultValue);
+	}
 
-	Short getShort(String key);
+	default Short getShort(String key) {
+		return Short.valueOf(getString(key));
+	}
 
-	Short getShort(String key, Short defaultValue);
+	default Short getShort(String key, Short defaultValue) {
+		return safe(() -> getShort(key), defaultValue);
+	}
 
-	Integer getInteger(String key);
+	default Integer getInteger(String key) {
+		return Integer.valueOf(getString(key));
+	}
 
-	Integer getInteger(String key, Integer defaultValue);
+	default Integer getInteger(String key, Integer defaultValue) {
+		return safe(() -> getInteger(key), defaultValue);
+	}
 
-	Long getLong(String key);
+	default Long getLong(String key) {
+		return Long.valueOf(getString(key));
+	}
 
-	Long getLong(String key, Long defaultValue);
+	default Long getLong(String key, Long defaultValue) {
+		return safe(() -> getLong(key), defaultValue);
+	}
 
-	Float getFloat(String key);
+	default Float getFloat(String key) {
+		return Float.valueOf(getString(key));
+	}
 
-	Float getFloat(String key, Float defaultValue);
+	default Float getFloat(String key, Float defaultValue) {
+		return safe(() -> getFloat(key), defaultValue);
+	}
 
-	Double getDouble(String key);
+	default Double getDouble(String key) {
+		return Double.valueOf(getString(key));
+	}
 
-	Double getDouble(String key, Double defaultValue);
+	default Double getDouble(String key, Double defaultValue) {
+		return safe(() -> getDouble(key), defaultValue);
+	}
 
-	String getString(String key);
+	default String getString(String key) {
+		return String.valueOf(get(key));
+	}
 
-	String getString(String key, String defaultValue);
+	default String getString(String key, String defaultValue) {
+		return safe(() -> getString(key), defaultValue);
+	}
 
-	String[] getStringArray(String key);
 
-	String[] getStringArray(String key, char delimiter);
+	default String[] getStringArray(String key) {
+		return getStringArray(key, StringUtil.DEFAULT_DELIMITER);
+	}
 
-	String[] getStringArray(String key, String[] defaultValue);
+	default String[] getStringArray(String key, char delimiter) {
+		return getString(key).split(String.valueOf(delimiter));
+	}
 
-	String[] getStringArray(String key, char delimiter, String[] defaultValue);
+	default String[] getStringArray(String key, String[] defaultValue) {
+		return safe(() -> getStringArray(key), defaultValue);
+	}
+
+	default String[] getStringArray(String key, char delimiter, String[] defaultValue) {
+		return safe(() -> getStringArray(key, delimiter), defaultValue);
+	}
+
+	default <E extends Enum<E>> E getEnum(String key, Class<E> type) {
+		String value = getString(key);
+		return Enum.valueOf(type, value);
+	}
+
+	default <E extends Enum<E>> E getEnum(String key, Class<E> type, E defaultValue) {
+		return safe(() -> getEnum(key, type), defaultValue);
+	}
+
+	default <E extends Enum<E>> E getEnum(String key, E defaultValue) {
+		return safe(() -> getEnum(key, defaultValue.getDeclaringClass()), defaultValue);
+	}
 
 }

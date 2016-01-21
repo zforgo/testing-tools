@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class WebrdiverTest {
 
-	@Test
+//	@Test
 	public void localDriverTests() {
 		WebDriver d = SeleniumContext.getInstance().driver(DriverSetup.CHROME);
 		System.out.println(d);

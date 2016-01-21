@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Properties;
 
-public class HierarchicalConfiguration extends AbstractConfiguration {
+public class HierarchicalConfiguration implements Configuration {
 
 	private Configuration current;
 	private Configuration parent;

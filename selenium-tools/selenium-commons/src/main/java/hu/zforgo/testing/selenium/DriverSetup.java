@@ -1,7 +1,5 @@
 package hu.zforgo.testing.selenium;
 
-import hu.zforgo.common.util.CollectionUtil;
-import hu.zforgo.common.util.StringUtil;
 import hu.zforgo.testing.tools.configuration.Configuration;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +16,22 @@ import java.util.Map;
 
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 
+/*
+Chrome esetén:
+1) arguments támogatás (no default browser check alapból)
+2) extensions támogatás
+3) binary támogatás
+4) preference log támogatás
+5) experimental options
+6) proxy támogatás
+7) start maximized támogatás (arguments esetén már megvan)
+
+általánosságban
+local / remote támogatás
+maximize támogatás
+preflog támogatás
+extensions (természetesen, ahol van rá lehetőség)
+ */
 public enum DriverSetup {
 	FIREFOX {
 		@Override
@@ -33,6 +47,7 @@ public enum DriverSetup {
 		}
 	},
 	CHROME {
+		//		all available switches at: http://peter.sh/experiments/chromium-command-line-switches/
 		private final String[] defaultSwitches = new String[]{"--no-default-browser-check"};
 		private final Map<String, Object> defaultPrefs = new HashMap<>();
 		{
@@ -47,6 +62,29 @@ public enum DriverSetup {
 		@Override
 		public DesiredCapabilities buildCapabilities(Proxy proxy, Configuration extras) {
 			DesiredCapabilities base = DesiredCapabilities.chrome();
+			ChromeOptions options = new ChromeOptions();
+			DesiredCapabilities extraCaps = new DesiredCapabilities();
+			/*
+				// Add the WebDriver proxy capability.
+				Proxy proxy = new Proxy();
+				proxy.setHttpProxy("myhttpproxy:3337");
+				capabilities.setCapability("proxy", proxy);
+
+				// Add ChromeDriver-specific capabilities through ChromeOptions.
+				ChromeOptions options = new ChromeOptions();
+				options.addExtensions(new File("/path/to/extension.crx"));
+				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+				ChromeDriver driver = new ChromeDriver(capabilities);
+
+ 				//set binary
+ 				Map<String, Object> chromeOptions = new Map<String, Object>();
+ 				chromeOptions.put("binary", "/usr/lib/chromium-browser/chromium-browser");
+ 				DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+ 				capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+ 				WebDriver driver = new ChromeDriver(capabilities);
+			 */
+//TODO clear
+			/*
 			DesiredCapabilities extraCaps = new DesiredCapabilities(extras.remains("switches").remains("prefs").remains("options").asMap());
 			extraCaps.setCapability("chrome.switches",
 					CollectionUtil.unionArraysAsSet(extras.getStringArray("switches", StringUtil.EMPTY_STRING_ARRAY), defaultSwitches));
@@ -56,6 +94,7 @@ public enum DriverSetup {
 
 			extraCaps.setCapability(ChromeOptions.CAPABILITY,
 					CollectionUtil.unionMap(defaultOptions, extras.submap("options.").asMap()));
+*/
 			return addProxy(new DesiredCapabilities(base, extraCaps), proxy);
 		}
 

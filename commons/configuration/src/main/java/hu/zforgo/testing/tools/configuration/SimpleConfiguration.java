@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-public class SimpleConfiguration extends AbstractConfiguration {
+public class SimpleConfiguration implements Configuration {
 
 	private Map<String, Object> props;
 

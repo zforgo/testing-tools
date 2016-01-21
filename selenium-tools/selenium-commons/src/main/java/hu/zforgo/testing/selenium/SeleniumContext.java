@@ -11,12 +11,16 @@ import javaslang.Tuple;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,8 +32,8 @@ import static hu.zforgo.common.util.ConfigConstants.prefix_DEFAULT;
 public final class SeleniumContext implements ContextInitializer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SeleniumContext.class);
-	private static final String prefix_PROXY = "proxy.";
-	private static final String prefix_DRIVER = "driver.";
+	private static final String prefix_PROXY = "selenium.proxy.";
+	private static final String prefix_DRIVER = "selenium.driver.";
 
 	private static volatile SeleniumContext instance;
 
@@ -37,6 +41,14 @@ public final class SeleniumContext implements ContextInitializer {
 
 	private static volatile Map<DriverSetup, Proxy> configuredProxies;
 	private static volatile Map<DriverSetup, Configuration> additionalCapabilities;
+
+	private static volatile URL remoteHub;
+	private static volatile Mode mode = Mode.LOCAL;
+
+	private enum Mode {
+		LOCAL,
+		REMOTE
+	}
 
 	@Override
 	public void init(TestingToolsContext context, Configuration contextConfig) throws ContextInitializationException, ContextInitializationFailure {
@@ -59,7 +71,15 @@ public final class SeleniumContext implements ContextInitializer {
 					.filter(t -> Objects.nonNull(t._2))
 					.collect(Collectors.toMap(t -> t._1, t -> t._2)));
 		}
-
+		//Configure HUB
+		mode = contextConfig.getEnum("selenium.mode", Mode.LOCAL);
+		if (Mode.REMOTE == mode) {
+			try {
+				remoteHub = new URL(contextConfig.getString("selenium.hub"));
+			} catch (MalformedURLException | NoSuchElementException e) {
+				throw new ContextInitializationFailure("Unable to configure Selenium HUB", e);
+			}
+		}
 		//Configure additional Capabilities
 		if (CollectionUtil.isEmpty(additionalCapabilities)) {
 			LOG.debug("Configuring additional Selenium Capabilities...");
@@ -83,7 +103,7 @@ public final class SeleniumContext implements ContextInitializer {
 
 	public WebDriver driver(DriverSetup ds) {
 		DesiredCapabilities cap = ds.buildCapabilities(configuredProxies.get(ds), additionalCapabilities.getOrDefault(ds, Configuration.EMPTY));
-		return ds.driver(cap);
+		return mode == Mode.REMOTE ? new RemoteWebDriver(remoteHub, cap) : ds.driver(cap);
 	}
 
 	@Override

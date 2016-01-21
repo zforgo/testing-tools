@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProxyTest {
 
-	@Test
+//	@Test
 	public void proxyTest() throws NoSuchFieldException {
 		Map<DriverSetup, Proxy> proxies = ClassUtil.fieldValue(SeleniumContext.class, "configuredProxies");
 		{
