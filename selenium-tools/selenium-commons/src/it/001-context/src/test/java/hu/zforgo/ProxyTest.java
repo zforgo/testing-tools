@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProxyTest {
 
-//	@Test
+	@Test
 	public void proxyTest() throws NoSuchFieldException {
 		Map<DriverSetup, Proxy> proxies = ClassUtil.fieldValue(SeleniumContext.class, "configuredProxies");
 		{
@@ -27,13 +27,13 @@ public class ProxyTest {
 			assertThat(p.getHttpProxy()).isNullOrEmpty();
 			assertThat(p.getProxyType()).isEqualTo(Proxy.ProxyType.AUTODETECT);
 		}
-		{
-			Proxy p = proxies.get(DriverSetup.IE);
-
-			assertThat(p.isAutodetect()).isFalse();
-			assertThat(p.getFtpProxy()).isEqualTo("localhost:9321");
-			assertThat(p.getHttpProxy()).isNullOrEmpty();
-			assertThat(p.getProxyType()).isEqualTo(Proxy.ProxyType.MANUAL);
-		}
+//		{
+//			Proxy p = proxies.get(DriverSetup.IE);
+//
+//			assertThat(p.isAutodetect()).isFalse();
+//			assertThat(p.getFtpProxy()).isEqualTo("localhost:9321");
+//			assertThat(p.getHttpProxy()).isNullOrEmpty();
+//			assertThat(p.getProxyType()).isEqualTo(Proxy.ProxyType.MANUAL);
+//		}
 	}
 }

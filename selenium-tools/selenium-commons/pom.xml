@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>selenium-commons</artifactId>
 	<properties>
-		<selenium.version>2.48.2</selenium.version>
+		<selenium.version>2.52.0</selenium.version>
 	</properties>
 
 	<dependencies>
