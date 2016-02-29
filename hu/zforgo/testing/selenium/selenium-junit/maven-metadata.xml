@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>hu.zforgo.testing.selenium</groupId>
+  <artifactId>selenium-junit</artifactId>
+  <versioning>
+    <versions>
+      <version>0.3.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160229192950</lastUpdated>
+  </versioning>
+</metadata>
