@@ -6,6 +6,7 @@ import hu.zforgo.testing.tools.configuration.ConfigurationFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,9 +56,11 @@ public class ValidDriverTest {
 	public void baseLoalDriverTests() {
 		// extensions and preferences checks
 		assertThat(driver).as("Checking %s driver state.", driverSetup.name()).isNotNull();
-		// startpage check
-		assertThat(driver.getCurrentUrl()).as("Check Startup page for driver: %s", driverSetup.name()).isEqualTo(START_PAGE);
+	}
 
+	@Test
+	public void loggingPreferencesTest() {
+		Assume.assumeFalse(String.format("The driver [%s] doesn't support loggingPreferences option. Ignored.", driverSetup.name()), driverSetup == DriverSetup.HTMLUNIT);
 		// logging preferences checks
 		Logs logs = driver.manage().logs();
 		assertThat(logs.get(LogType.DRIVER)).isEmpty();
@@ -67,6 +70,13 @@ public class ValidDriverTest {
 		if (driverSetup == DriverSetup.CHROME) {
 			assertThat(logs.get(LogType.PERFORMANCE)).isNotEmpty();
 		}
+	}
+
+	@Test
+	public void startPageTest() {
+		Assume.assumeFalse(String.format("The driver [%s] doesn't support startPage option. Ignored.", driverSetup.name()), driverSetup == DriverSetup.HTMLUNIT);
+		// startpage check
+		assertThat(driver.getCurrentUrl()).as("Check Startup page for driver: %s", driverSetup.name()).isEqualTo(START_PAGE);
 	}
 
 

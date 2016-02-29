@@ -21,7 +21,7 @@ public class InvalidDriverTest {
 
 	@Parameterized.Parameters
 	public static Collection<Object[]> allDrivers() {
-		return Stream.of(DriverSetup.values()).map(e -> new Object[]{e}).collect(Collectors.toList());
+		return Stream.of(DriverSetup.values()).filter(d-> DriverSetup.HTMLUNIT != d).map(e -> new Object[]{e}).collect(Collectors.toList());
 	}
 
 	@Test(expected = Exception.class)

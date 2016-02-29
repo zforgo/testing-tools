@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -120,6 +121,19 @@ public enum DriverSetup {
 		@Override
 		public WebDriver driver(DesiredCapabilities capabilities) {
 			return new ChromeDriver(capabilities);
+		}
+	},
+	HTMLUNIT {
+		@Override
+		public DesiredCapabilities buildCapabilities(Proxy proxy, Configuration extras, LoggingPreferences logs) {
+			DesiredCapabilities base = extras.boolValue("disableJs", false) ? DesiredCapabilities.htmlUnit() : DesiredCapabilities.htmlUnitWithJs();
+			return configureLogging(addProxy(base, proxy), logs, extras);
+		}
+
+		@Override
+		public WebDriver driver(DesiredCapabilities capabilities) {
+			HtmlUnitDriver d =  new HtmlUnitDriver(capabilities);
+			return d;
 		}
 	};
 	/*,
