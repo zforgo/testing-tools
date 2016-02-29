@@ -3,10 +3,9 @@
   <groupId>hu.zforgo.testing.testng</groupId>
   <artifactId>testng-tools</artifactId>
   <versioning>
-    <release>0.2.0</release>
     <versions>
-      <version>0.2.0</version>
+      <version>0.3.0-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20151101144954</lastUpdated>
+    <lastUpdated>20160229192601</lastUpdated>
   </versioning>
 </metadata>
