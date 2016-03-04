@@ -18,12 +18,6 @@
 			<artifactId>common-context</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-<!-- TODO remove -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -40,6 +34,8 @@
 			<artifactId>configuration</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -65,5 +61,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build></project>
+	</build>
+</project>
 

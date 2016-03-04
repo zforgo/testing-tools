@@ -1,5 +1,7 @@
 package hu.zforgo.testing.selenium;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import hu.zforgo.common.util.ClassUtil;
 import hu.zforgo.common.util.StringUtil;
 import hu.zforgo.testing.tools.configuration.Configuration;
 import org.openqa.selenium.Proxy;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
+import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
 public enum DriverSetup {
 	FIREFOX {
@@ -127,12 +130,32 @@ public enum DriverSetup {
 		@Override
 		public DesiredCapabilities buildCapabilities(Proxy proxy, Configuration extras, LoggingPreferences logs) {
 			DesiredCapabilities base = extras.boolValue("disableJs", false) ? DesiredCapabilities.htmlUnit() : DesiredCapabilities.htmlUnitWithJs();
+			String browserName = extras.getString(BROWSER_NAME, null);
+			try {
+				if (!StringUtil.isWhite(browserName)) {
+					BrowserVersion v = ClassUtil.fieldValue(BrowserVersion.class, browserName);
+					base.setCapability("htmlunit.browser", v);
+				}
+			} catch (NoSuchFieldException e) {
+				throw new WebDriverException("Couldn't find browser: " + browserName, e);
+			}
 			return configureLogging(addProxy(base, proxy), logs, extras);
 		}
 
 		@Override
 		public WebDriver driver(DesiredCapabilities capabilities) {
-			HtmlUnitDriver d =  new HtmlUnitDriver(capabilities);
+			HtmlUnitDriver d;
+			BrowserVersion v;
+			if ((v = (BrowserVersion) capabilities.getCapability("htmlunit.browser")) != null) {
+				d = new HtmlUnitDriver(v);
+				d.setJavascriptEnabled(capabilities.isJavascriptEnabled());
+				Proxy p;
+				if ((p = (Proxy) capabilities.getCapability(PROXY)) != null) {
+					d.setProxySettings(p);
+				}
+			} else {
+				d = new HtmlUnitDriver(capabilities);
+			}
 			return d;
 		}
 	};
