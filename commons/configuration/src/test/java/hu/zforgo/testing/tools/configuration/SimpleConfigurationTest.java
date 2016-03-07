@@ -40,6 +40,8 @@ public abstract class SimpleConfigurationTest extends AbstractConfigurationTest 
 	protected static final double doubleValueNegative = -5340282346638528860000000000000000000000.000000;
 	protected static final String PROPERTIES_NAME = "test.properties";
 
+	private static final String[] stringArrayValue = {"foo", "bar", "baz", "bad", "robot"};
+
 	public SimpleConfigurationTest(String type, Configuration c) {
 		super(type, c);
 	}
@@ -70,5 +72,16 @@ public abstract class SimpleConfigurationTest extends AbstractConfigurationTest 
 			Throwable t = catchThrowable(() -> ConfigurationFactory.load(MISSING_PROPERTIES_NAME, path()));
 			assertThat(t).isInstanceOf(NoSuchFileException.class);
 		}
+	}
+
+
+	@Test
+	public void submapTest() {
+		Configuration sub = c.submap("string.array.");
+		assertThat(sub.asMap().size()).isEqualTo(7);
+		assertThat(sub.getString("must_not_be", null)).isNull();
+		assertThat(sub.getString("string.value", null)).isNull();
+		assertThat(sub.getStringArray("colon", ':')).isEqualTo(stringArrayValue);
+		checkMissingKey(() -> sub.getString("string.value"));
 	}
 }

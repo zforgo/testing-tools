@@ -23,6 +23,8 @@ public abstract class HierarchicalConfigurationTest extends AbstractConfiguratio
 
 	private static final String FILENAME = "hierarchical.properties";
 
+	private static final String[] stringArrayValue = {"foo", "bar", "baz", "bad", "robot"};
+
 	public HierarchicalConfigurationTest(String type, Configuration c) {
 		super(type, c);
 	}
@@ -72,4 +74,13 @@ public abstract class HierarchicalConfigurationTest extends AbstractConfiguratio
 		}
 	}
 
+	@Test
+	public void submapTest() {
+		Configuration sub = c.submap("string.array.");
+		assertThat(sub.asMap().size()).isEqualTo(3);
+		assertThat(sub.getString("must_not_be", null)).isNull();
+		assertThat(sub.getString("string.allset", null)).isNull();
+		assertThat(sub.getStringArray("allset")).isEqualTo(stringArrayValue);
+		checkMissingKey(() -> sub.getString("string.allset"));
+	}
 }
