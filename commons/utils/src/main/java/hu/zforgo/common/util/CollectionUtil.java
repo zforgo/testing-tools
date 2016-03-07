@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public class CollectionUtil {
 
+	@SafeVarargs
 	public static <T> boolean isEmpty(T[]... input) {
 		return input == null || input.length == 0;
 	}

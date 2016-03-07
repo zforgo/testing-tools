@@ -1,5 +1,7 @@
 package hu.zforgo.testing.tools.configuration;
 
+import hu.zforgo.common.util.CollectionUtil;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -62,11 +64,8 @@ public class HierarchicalConfiguration implements Configuration {
 				current.remains(prefix), parent.remains(prefix));
 	}
 
-	//TODO use CollectionUtil
 	@Override
 	public Map<String, Object> asMap() {
-		Map<String, Object> p = parent.asMap();
-		p.putAll(current.asMap());
-		return p;
+		return CollectionUtil.unionMap(parent.asMap(), current.asMap());
 	}
 }
