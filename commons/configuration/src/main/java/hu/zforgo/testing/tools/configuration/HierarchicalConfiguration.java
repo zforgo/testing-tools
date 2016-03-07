@@ -38,6 +38,7 @@ public class HierarchicalConfiguration implements Configuration {
 
 	@Override
 	public Object get(String key) {
+		Objects.requireNonNull(key, "Key cannot be null!");
 		Object result = current.get(key, null);
 		if (result != null) {
 			return result;

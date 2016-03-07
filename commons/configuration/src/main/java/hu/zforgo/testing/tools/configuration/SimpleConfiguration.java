@@ -32,6 +32,7 @@ public class SimpleConfiguration implements Configuration {
 
 	@Override
 	public Object get(String key) {
+		Objects.requireNonNull(key, "Key cannot be null!");
 		Object res = props.get(key);
 		if (res == null) {
 			throw new NoSuchElementException("Configuration key not found: " + key);
