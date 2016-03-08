@@ -83,4 +83,12 @@ public abstract class HierarchicalConfigurationTest extends AbstractConfiguratio
 		assertThat(sub.getStringArray("allset")).isEqualTo(stringArrayValue);
 		checkMissingKey(() -> sub.getString("string.allset"));
 	}
+
+	@Test
+	public void remainsTest() {
+		assertThat(c.remains("string.").asMap().size()).isEqualTo(34);
+		assertThat(c.remains("string.array").asMap().size()).isEqualTo(37);
+		assertThat(c.remains("string.array.").asMap().size()).isEqualTo(37);
+		assertThat(c.remains("there_isnt_any").asMap().size()).isEqualTo(40);
+	}
 }

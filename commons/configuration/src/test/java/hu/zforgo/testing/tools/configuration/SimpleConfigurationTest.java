@@ -84,4 +84,12 @@ public abstract class SimpleConfigurationTest extends AbstractConfigurationTest 
 		assertThat(sub.getStringArray("colon", ':')).isEqualTo(stringArrayValue);
 		checkMissingKey(() -> sub.getString("string.value"));
 	}
+
+	@Test
+	public void remainsTest() {
+		assertThat(c.remains("string.").asMap().size()).isEqualTo(23);
+		assertThat(c.remains("string.array").asMap().size()).isEqualTo(29);
+		assertThat(c.remains("string.array.").asMap().size()).isEqualTo(30);
+		assertThat(c.remains("there_isnt_any").asMap().size()).isEqualTo(37);
+	}
 }
