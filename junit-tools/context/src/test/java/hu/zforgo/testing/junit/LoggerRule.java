@@ -1,4 +1,4 @@
-package hu.zforgo.junit.tools;
+package hu.zforgo.testing.junit;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestWatcher;
