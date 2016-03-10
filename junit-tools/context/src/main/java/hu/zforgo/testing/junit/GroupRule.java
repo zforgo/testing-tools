@@ -1,4 +1,4 @@
-package hu.zforgo.junit.tools.context;
+package hu.zforgo.testing.junit;
 
 import hu.zforgo.junit.tools.context.annotations.AlwaysRun;
 import hu.zforgo.junit.tools.context.annotations.Groups;

@@ -39,7 +39,7 @@
 					<properties>
 						<property>
 							<name>listener</name>
-							<value>hu.zforgo.junit.tools.context.JUnitToolsListener</value>
+							<value>hu.zforgo.testing.junit.JUnitToolsListener</value>
 						</property>
 					</properties>
 				</configuration>

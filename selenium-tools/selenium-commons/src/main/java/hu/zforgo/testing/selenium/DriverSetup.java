@@ -3,7 +3,7 @@ package hu.zforgo.testing.selenium;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import hu.zforgo.common.util.ClassUtil;
 import hu.zforgo.common.util.StringUtil;
-import hu.zforgo.testing.tools.configuration.Configuration;
+import hu.zforgo.testing.configuration.Configuration;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;

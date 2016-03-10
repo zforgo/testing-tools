@@ -3,8 +3,8 @@ package hu.zforgo.testing.context;
 import hu.zforgo.common.util.ClassUtil;
 import hu.zforgo.common.util.CollectionUtil;
 import hu.zforgo.common.util.StringUtil;
-import hu.zforgo.testing.tools.configuration.Configuration;
-import hu.zforgo.testing.tools.configuration.ConfigurationFactory;
+import hu.zforgo.testing.configuration.Configuration;
+import hu.zforgo.testing.configuration.ConfigurationFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

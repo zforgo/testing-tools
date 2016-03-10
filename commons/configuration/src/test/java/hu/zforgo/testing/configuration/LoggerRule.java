@@ -1,4 +1,4 @@
-package hu.zforgo.testing.tools.configuration;
+package hu.zforgo.testing.configuration;
 
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;

@@ -1,6 +1,6 @@
 package hu.zforgo.junit.tools;
 
-import hu.zforgo.junit.tools.context.GroupRule;
+import hu.zforgo.testing.junit.GroupRule;
 import hu.zforgo.junit.tools.context.annotations.AlwaysRun;
 import hu.zforgo.junit.tools.context.annotations.Groups;
 import org.junit.Assert;

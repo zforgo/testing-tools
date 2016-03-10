@@ -1,7 +1,7 @@
 package hu.zforgo.testing.context;
 
 
-import hu.zforgo.testing.tools.configuration.Configuration;
+import hu.zforgo.testing.configuration.Configuration;
 
 public interface ContextInitializer {
 

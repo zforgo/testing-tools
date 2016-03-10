@@ -1,4 +1,4 @@
-package hu.zforgo.testng.tools.context;
+package hu.zforgo.testing.testng;
 
 import hu.zforgo.testing.context.TestingToolsContext;
 

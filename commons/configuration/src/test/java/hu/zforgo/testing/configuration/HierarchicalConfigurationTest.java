@@ -1,4 +1,4 @@
-package hu.zforgo.testing.tools.configuration;
+package hu.zforgo.testing.configuration;
 
 import org.junit.Test;
 import org.junit.runners.Parameterized;

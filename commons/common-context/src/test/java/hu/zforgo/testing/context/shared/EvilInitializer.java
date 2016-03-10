@@ -4,7 +4,7 @@ import hu.zforgo.testing.context.ContextInitializationException;
 import hu.zforgo.testing.context.ContextInitializationFailure;
 import hu.zforgo.testing.context.ContextInitializer;
 import hu.zforgo.testing.context.TestingToolsContext;
-import hu.zforgo.testing.tools.configuration.Configuration;
+import hu.zforgo.testing.configuration.Configuration;
 
 public class EvilInitializer implements ContextInitializer {
 
