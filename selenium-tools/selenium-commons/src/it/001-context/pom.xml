@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.zforgo.testing.selenium</groupId>
     <artifactId>001-context</artifactId>
-    <!--<version>0.3.0-SNAPSHOT</version>-->
-    <version>@project.version@</version>
+    <version>0.3.0-SNAPSHOT</version>
+    <!--<version>@project.version@</version>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,7 +46,7 @@
                     <properties>
                         <property>
                             <name>listener</name>
-                            <value>hu.zforgo.junit.tools.context.JUnitToolsListener</value>
+                            <value>hu.zforgo.testing.junit.JUnitToolsListener</value>
                         </property>
                     </properties>
                     <test>**/ValidDriverTest</test>
@@ -98,14 +98,13 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-
                             <test combine.self="override">**/InvalidDriverTest</test>
                             <environmentVariables combine.self="override">
                                 <FIREFOX_HOME>/invalid/environment/binary</FIREFOX_HOME>
                                 <CHROME_HOME>/invalid/environment/binary</CHROME_HOME>
                             </environmentVariables>
-                            <forkCount>1</forkCount>
-                        </configuration>
+							<forkCount>1</forkCount>
+						</configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -118,7 +117,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-
                             <test combine.self="override">**/ProxyTest</test>
                             <systemPropertyVariables>
                                 <testingtools.context.config>proxy-config.properties</testingtools.context.config>

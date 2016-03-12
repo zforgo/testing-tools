@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>hu.zforgo.testing.junit</groupId>
 	<artifactId>003-initializers</artifactId>
-	<!--<version>0.3.0-SNAPSHOT</version>-->
-	<version>@project.version@</version>
+	<version>0.3.0-SNAPSHOT</version>
+	<!--<version>@project.version@</version>-->
 	<packaging>pom</packaging>
 
 	<properties>
@@ -32,7 +32,6 @@
 			<artifactId>common-context</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -53,7 +52,7 @@
 					<properties>
 						<property>
 							<name>listener</name>
-							<value>hu.zforgo.junit.tools.context.JUnitToolsListener</value>
+							<value>hu.zforgo.testing.junit.JUnitToolsListener</value>
 						</property>
 					</properties>
 				</configuration>

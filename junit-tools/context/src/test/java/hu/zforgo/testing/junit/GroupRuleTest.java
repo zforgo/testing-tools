@@ -1,7 +1,7 @@
 package hu.zforgo.testing.junit;
 
-import hu.zforgo.junit.tools.context.annotations.AlwaysRun;
-import hu.zforgo.junit.tools.context.annotations.Groups;
+import hu.zforgo.testing.junit.annotations.AlwaysRun;
+import hu.zforgo.testing.junit.annotations.Groups;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;

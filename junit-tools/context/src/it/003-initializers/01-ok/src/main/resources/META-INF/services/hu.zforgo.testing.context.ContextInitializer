@@ -1,2 +1,2 @@
 hu.zforgo.testing.context.shared.CommonInitializer
-hu.zforgo.testing.tools.context.JunitToolsInitializer
+hu.zforgo.testing.context.JunitToolsInitializer

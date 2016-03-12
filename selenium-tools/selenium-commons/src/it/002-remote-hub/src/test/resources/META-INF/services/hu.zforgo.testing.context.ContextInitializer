@@ -1,2 +1,2 @@
 hu.zforgo.testing.selenium.SeleniumContext
-hu.zforgo.testingtools.selenium.context.SeleniumGridContext
+hu.zforgo.testing.selenium.context.SeleniumGridContext
