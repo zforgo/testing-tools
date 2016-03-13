@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>hu.zforgo.testing.testng</groupId>
 	<artifactId>001-default-context</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
-	<!--<version>@project.version@</version>-->
+	<!--<version>0.3.0-SNAPSHOT</version>-->
+	<version>@project.version@</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
