@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>hu.zforgo.testing</groupId>
 		<artifactId>testing-tools</artifactId>
-		<version>0.3.0-SNAPSHOT</version>
+		<version>0.3.0</version>
 	</parent>
 	<groupId>hu.zforgo.testing.junit</groupId>
 	<artifactId>junit-tools</artifactId>
