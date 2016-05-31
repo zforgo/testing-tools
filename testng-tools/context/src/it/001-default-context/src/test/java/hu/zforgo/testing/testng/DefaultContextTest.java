@@ -11,10 +11,12 @@ public class DefaultContextTest {
 	@Test
 	public void isDefaultContext() {
 		assertThat(TestingToolsContext.getInstance()).isInstanceOf(TestingToolsContext.class);
+		assertThat(TestNGToolsContext.getInstance()).isInstanceOf(TestNGToolsContext.class);
+
 	}
 
-	@Test(expectedExceptions = {ClassCastException.class})
-	public void classCastTest() {
-		TestNGToolsContext.getInstance();
-	}
+//	@Test(expectedExceptions = {ClassCastException.class})
+//	public void classCastTest() {
+//		TestNGToolsContext.getInstance();
+//	}
 }
