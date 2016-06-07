@@ -17,6 +17,10 @@ public class TestNGToolsContext extends TestingToolsContext {
 	}
 
 	public static TestNGToolsContext getInstance() {
+
+		System.out.println("valami");
+		System.out.println(Thread.currentThread().getStackTrace()[2]);
+		System.out.println(Thread.currentThread().getStackTrace()[3]);
 		return (TestNGToolsContext) TestingToolsContext.getInstance();
 	}
 }
