@@ -4,7 +4,7 @@
 
 	<groupId>hu.zforgo.testing</groupId>
 	<artifactId>testing-tools</artifactId>
-	<version>0.3.1</version>
+	<version>0.3.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Testing Tools</name>
@@ -16,7 +16,7 @@
 		<connection>scm:git:git@github.com:zforgo/testing-tools.git</connection>
 		<developerConnection>scm:git:https://github.com/zforgo/testing-tools.git</developerConnection>
 		<url>${project.url}</url>
-		<tag>testing-tools-0.3.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>
