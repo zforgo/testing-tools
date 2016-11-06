@@ -6,10 +6,12 @@ import hu.zforgo.testing.context.ContextInitializationFailure;
 import hu.zforgo.testing.context.ContextInitializer;
 import hu.zforgo.testing.context.TestingToolsContext;
 import org.openqa.grid.common.RegistrationRequest;
-import org.openqa.grid.internal.utils.GridHubConfiguration;
 import org.openqa.grid.internal.utils.SelfRegisteringRemote;
+import org.openqa.grid.internal.utils.configuration.GridHubConfiguration;
+import org.openqa.grid.internal.utils.configuration.GridNodeConfiguration;
+import org.openqa.grid.internal.utils.configuration.StandaloneConfiguration;
 import org.openqa.grid.web.Hub;
-import org.openqa.selenium.server.SeleniumServer;
+import org.openqa.selenium.remote.server.SeleniumServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,7 @@ import java.net.URL;
 public class SeleniumGridContext implements ContextInitializer {
 	private static final Logger LOG = LoggerFactory.getLogger(SeleniumGridContext.class);
 
-	private static volatile Hub hub;
+	private static volatile SeleniumServer server;
 	private static volatile SelfRegisteringRemote node;
 
 	@Override
@@ -27,24 +29,26 @@ public class SeleniumGridContext implements ContextInitializer {
 			URL remoteHub = new URL(contextConfig.getString("selenium.hub"));
 
 			LOG.info("Starting remote Selenium HUB on: " + remoteHub);
-			GridHubConfiguration c = GridHubConfiguration.build(new String[]{});
-			c.setHost(remoteHub.getHost());
-			c.setPort(remoteHub.getPort());
-			Hub h = new Hub(c);
-			h.start();
-			hub = h;
+			GridHubConfiguration c = new GridHubConfiguration();
+			c.host = remoteHub.getHost();
+			c.port = remoteHub.getPort();
+
+			SeleniumServer s = new SeleniumServer(c);
+			server = s;
 
 			LOG.info("Starting remote Selenium Grid Node");
-			RegistrationRequest rc = RegistrationRequest.build("-role", "hub", "-host", "localhost", "-hub", hub.getRegistrationURL().toString());
+			GridNodeConfiguration nodeConfiguration = GridNodeConfiguration.loadFromJSON(getClass().getResource("/nodeconfig.json").getFile());
+
+			RegistrationRequest rc = RegistrationRequest.build(nodeConfiguration, "TestNode");
 
 			SelfRegisteringRemote remote = new SelfRegisteringRemote(rc);
-			remote.setRemoteServer(new SeleniumServer(rc.getConfiguration()));
-			remote.startRemoteServer();
 			LOG.info("Selenium Grid node is up and ready to register to the hub");
+			remote.setRemoteServer(s);
+			remote.startRemoteServer();
 			remote.startRegistrationProcess();
 			node = remote;
 
-			LOG.info("Selenium Grid launched successfully. Hub is on: " + h.getUrl());
+			LOG.info("Selenium Grid launched successfully. Hub is on: " + remoteHub.toString());
 		} catch (Exception e) {
 			LOG.error("An error occured during starting Selenium Grid", e);
 			throw new ContextInitializationFailure(e);
@@ -62,8 +66,8 @@ public class SeleniumGridContext implements ContextInitializer {
 			LOG.error("An error occured during shutting down Selenium Grid Node", e);
 		}
 		try {
-			if (hub != null) {
-				hub.stop();
+			if (server != null) {
+				server.stop();
 			}
 		} catch (Exception e) {
 			LOG.error("An error occured during shutting down Selenium Grid", e);

@@ -1,7 +1,5 @@
 package hu.zforgo.testing.selenium;
 
-import hu.zforgo.testing.selenium.DriverSetup;
-import hu.zforgo.testing.selenium.SeleniumContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

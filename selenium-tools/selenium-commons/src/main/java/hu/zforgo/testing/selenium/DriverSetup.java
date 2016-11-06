@@ -18,7 +18,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +25,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
+import static org.openqa.selenium.remote.CapabilityType.PROXY;
 
 public enum DriverSetup {
 	FIREFOX {
@@ -37,13 +36,7 @@ public enum DriverSetup {
 			FirefoxProfile firefoxProfile = new FirefoxProfile();
 
 			Stream.of(extras.getStringArray("extensions", PATH_SEPARATOR, StringUtil.EMPTY_STRING_ARRAY))
-					.map(File::new).forEachOrdered((extensionToInstall) -> {
-				try {
-					firefoxProfile.addExtension(extensionToInstall);
-				} catch (IOException e) {
-					throw new WebDriverException("Unable to install extension: " + extensionToInstall, e);
-				}
-			});
+					.map(File::new).forEachOrdered(firefoxProfile::addExtension);
 
 			Stream.of(extras.getStringArray("preferences", NEW_LINE, StringUtil.EMPTY_STRING_ARRAY))
 					.map(s -> s.split("=", 2))
@@ -61,7 +54,7 @@ public enum DriverSetup {
 				firefoxProfile.setPreference("browser.startup.homepage", page);
 			}
 			base.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
-
+			base.setCapability("marionette", true);
 
 			return configureLogging(addProxy(base, proxy), logs, extras);
 		}
